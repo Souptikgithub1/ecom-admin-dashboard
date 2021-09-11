@@ -1,0 +1,29 @@
+.right-nav-container {
+    /*background-image: url("https://demos.creative-tim.com/material-dashboard-pro-react/static/media/sidebar-2.42e96f8d.jpg");*/
+    background-image: url("https://demos.creative-tim.com/material-dashboard-pro-react/static/media/sidebar-1.d4b3c417.jpg");
+    height: 100%;
+    width: 100%;
+}
+
+.right-nav-overlay-container {
+    background-color: #111;
+    opacity: 0.85;
+    height: 100%;
+    width: 100%;
+    color: #fff;
+}
+
+.menu-list-container {
+    padding: 0rem 1.2rem;
+}
+
+.menu-header {
+    padding-bottom: 1.3rem !important;
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.menu-header-text {
+    margin-left: 10px;
+}

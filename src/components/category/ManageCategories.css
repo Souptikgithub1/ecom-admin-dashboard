@@ -1,0 +1,15 @@
+.manage-categories-container {
+    min-height: 80vh;
+    overflow: visible !important;
+}
+
+.tree-view-category {
+    flex: 3;
+    height: 100%;
+}
+
+.category-edit {
+    flex: 7;
+    border-left: 1px solid #e1e1e1;
+    height: 100%;
+}
