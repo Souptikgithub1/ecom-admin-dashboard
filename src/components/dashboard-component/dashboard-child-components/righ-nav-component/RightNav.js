@@ -12,7 +12,7 @@ const RightNav = ({navMenuItems}) => {
             <div className="menu-list-container">
                 <List component="nav" aria-label="main mailbox folders" >
                     <ListItem className='menu-header'  >
-                        <img src="/logo192.png" alt="none" style={{width: '1.7rem', height: '1.7rem'}}/>
+                        <img src="/ecart.svg" alt="none" style={{width: '2.5rem', height: '2.5rem'}}/>
                         <span className='menu-header-text' >Ecom Admin</span>
                     </ListItem>
                     <WhiteDivider />
