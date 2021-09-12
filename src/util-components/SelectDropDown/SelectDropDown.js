@@ -3,22 +3,22 @@ import React from "react";
 
 import '../text-input/TextInput.css'
 
-const SelectDropDown = ({categoryDepth, setCategoryDepth, menuList}) => {
+const SelectDropDown = ({labelId, id, value, setValue, menuList}) => {
 
 
   return <Select
-      labelId="demo-simple-select-label"
-      id="demo-simple-select"
+      labelId={labelId}
+      id={id}
       className='text-field'
       fullWidth
       color='secondary'
-      value={categoryDepth}
+      value={value}
       MenuProps={{
           style: {zIndex: 99999}
       }}
-      onChange={(e) => setCategoryDepth(e.target.value)}
+      onChange={(e) => setValue(e.target.value)}
   >
-      {menuList.map((depth, index) => <MenuItem key={index} value={index}>{index}</MenuItem>)}
+      {menuList.map((itemVal, index) => <MenuItem key={index} value={itemVal}>{itemVal}</MenuItem>)}
   </Select>
 }
 

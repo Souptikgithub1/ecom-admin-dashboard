@@ -18,19 +18,16 @@ const Modal = ({open, setOpen, header, children, footer, style={}}) => {
     }
 
     return <React.Fragment>
-        {/*{!!open
-            ?*/}
             <div className='modal-container ' style={{display: open ? 'flex' : 'none'}}>
                 <div className="modal-backdrop" onClick={handleModalClose} />
                 <div className={'modal-content-container js-modal-content-container'} style={style}>
                     <div className='close-icon-btn' onClick={handleModalClose}>
-                        <Icon style={{fontSize: '2rem'}}>close</Icon>
+                        <Icon className='close-icon'>close</Icon>
                     </div>
                     <div className="modal-header">{header}</div>
                     <div className='modal-body'>{children}</div>
                 </div>
             </div>
-        {/*: ''}*/}
     </React.Fragment>
 }
 

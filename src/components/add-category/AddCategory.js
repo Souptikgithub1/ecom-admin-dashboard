@@ -12,7 +12,7 @@ import Loader from "../../util-components/loader/Loader";
 import {useAppContext} from "../../context/AppContext";
 
 
-const AddCategory = ({setModalOpen}) => {
+const AddCategory = ({setModalOpen, parentCategories}) => {
 
     const {setLoading} = useAppContext()
 
@@ -20,6 +20,7 @@ const AddCategory = ({setModalOpen}) => {
     const [categoryDescription, setCategoryDescription] = useState('');
     const [categoryDepth, setCategoryDepth] = useState(0);
     const [activeIndicator, setActiveIndicator] = useState(false);
+    const [parentCategory, setParentCategory] = useState('');
 
     const handleAddCategory = () => {
         const category = {categoryName, categoryDescription, categoryDepth, activeIndicator}
@@ -28,7 +29,16 @@ const AddCategory = ({setModalOpen}) => {
         setTimeout(() => {
             setLoading(false)
             setModalOpen(false)
+            clearFormValues()
         }, 3000)
+    }
+
+    const clearFormValues = () => {
+        setCategoryName('')
+        setCategoryDescription('')
+        setCategoryDepth(0)
+        setParentCategory('')
+        setActiveIndicator(false)
     }
 
     const disableButton = () => {
@@ -36,14 +46,31 @@ const AddCategory = ({setModalOpen}) => {
     }
 
   return <React.Fragment>
-          <TextInput id="standard-basic" label="Enter Category Name" color='secondary' onChange={(e) => setCategoryName(e)}/>
-          <TextInput id="standard-basic" label="Enter Category Description" color='secondary' onChange={(e) =>setCategoryDescription(e)}/>
-          <InputLabel id="demo-simple-select-label" style={{width: '100%'}}>Category Depth</InputLabel>
-        <SelectDropDown
-            categoryDepth={categoryDepth}
-            setCategoryDepth={setCategoryDepth}
-            menuList={[...new Array(4)]}
-        />
+            <TextInput id="standard-basic" label="Enter Category Name" color='secondary' value={categoryName} onChange={(e) => setCategoryName(e)}/>
+            <TextInput id="standard-basic" label="Enter Category Description" color='secondary' value={categoryDescription} onChange={(e) =>setCategoryDescription(e)}/>
+            <InputLabel id="demo-simple-select-label" style={{width: '100%'}}>Category Depth</InputLabel>
+      <SelectDropDown
+          labelId="cat-depth-id"
+          id="cat-depth-id"
+          value={categoryDepth}
+          setValue={setCategoryDepth}
+          menuList={[0,1,2,3,4]}
+      />
+
+      {categoryDepth > 0
+          ?
+          <React.Fragment>
+              <InputLabel id="demo-simple-select-label" style={{width: '100%'}}>Parent Category</InputLabel>
+              <SelectDropDown
+                  labelId="parent-cat-id"
+                  id="parent-cat-id"
+                  value={parentCategory}
+                  setValue={setParentCategory}
+                  menuList={parentCategories}
+              />
+          </React.Fragment>
+          : ''
+      }
 
       <div className='switch-container'>
           <span>Active</span>

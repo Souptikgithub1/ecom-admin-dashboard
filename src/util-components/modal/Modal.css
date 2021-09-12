@@ -22,9 +22,9 @@
 .modal-content-container {
     z-index: 999999;
     background: #fff;
-    top: 17%;
+    top: 10%;
     height: 70%;
-    width: 50%;
+    width: 40rem;
     position: absolute;
     animation: opac0 300ms ease-in-out;
     border-radius: 0.3rem;
@@ -47,25 +47,33 @@
         top: -300px;
     }
     to {
-        top: 17%;
+        top: 10%;
     }
 }
 
 @keyframes opac0 {
-    from {top: 17%}
+    from {top: 10%}
     to {top: -300px}
 }
 
 
 .close-icon-btn {
     position: absolute;
-    top: -2.2rem;
-    right: -0.4rem;
-
+    top: .9rem;
+    right: .9rem;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #ddd;
+    padding: .3rem;
+    background: #e7e7e7;
+    border-radius: 50%;
+}
+
+.close-icon {
+    font-size: 2rem;
+    color: #515151;
+
 }
 
 .close-icon-btn:hover {

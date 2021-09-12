@@ -125,6 +125,8 @@ const treeData = [
     }
 ]
 
+const parentCats = ['Electronics', 'Tvs & Appliances', 'Men', 'Women']
+
 const ManageCategories = () => {
 
     const classes = useStyles();
@@ -148,7 +150,7 @@ const ManageCategories = () => {
                 <div className="tree-view-category">
                     <TreeView
                         className={classes.root}
-                        defaultExpanded={['1']}
+                        defaultExpanded={['0', '01', '011', '00', '000', '001']}
                         defaultCollapseIcon={<MinusSquare />}
                         defaultExpandIcon={<PlusSquare />}
                         defaultEndIcon={<CloseSquare />}
@@ -181,10 +183,9 @@ const ManageCategories = () => {
             open={modalOpen}
             setOpen={setModalOpen}
             header='Add Categories'
-            style={{width: '40rem'}}
         >
             <div className='add-category-form-container'>
-                <AddCategory setModalOpen={setModalOpen}/>
+                <AddCategory setModalOpen={setModalOpen} parentCategories={parentCats}/>
             </div>
         </Modal>
     </div>

@@ -5,6 +5,7 @@ const TextInput = ({
                        id='',
                        label='',
                        color='primary' | 'secondary',
+                        value,
                         onChange
 }) => {
     return <TextField
@@ -12,6 +13,7 @@ const TextInput = ({
         id={id}
         label={label}
         color={color}
+        value={value}
         fullWidth
         onChange={(e) => onChange(e.target.value)}
     />
