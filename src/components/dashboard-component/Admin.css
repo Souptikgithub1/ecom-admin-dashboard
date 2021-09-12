@@ -3,6 +3,7 @@
   flex-direction: row;
   width: 100%;
   background-color: #eee;
+  flex: 1;
 }
 
 .nav-panel {
