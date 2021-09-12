@@ -1,15 +1,46 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 89.5vh;
+}
+
+.add-category-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
 .manage-categories-container {
-    min-height: 80vh;
+    flex: 9;
     overflow: visible !important;
+    display: flex;
+    flex-direction: column;
 }
 
 .tree-view-category {
     flex: 3;
-    height: 100%;
+    align-items: stretch;
+    border-right: 1px solid #e1e1e1;
 }
 
 .category-edit {
-    flex: 7;
-    border-left: 1px solid #e1e1e1;
-    height: 100%;
+    flex: 9;
+}
+
+.card-content {
+    display: flex;
+    align-items: stretch;
+    padding: 1rem !important;
+    flex: 1;
+}
+
+
+.add-category-form-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 6rem;
 }

@@ -39,7 +39,7 @@ const Admin = () => {
     return <div className='dashboard-container'>
         <div className='nav-panel'><RightNav navMenuItems={navMenuItems} /></div>
         <div className='dashboard-content'>
-            <AppBar position="static" color='secondary' style={{backgroundColor: '#111', opacity: 1}}>
+            <AppBar position="static" color='secondary'>
                 <Toolbar>
                     <Typography variant="h6">
                         {appBarHeader}
@@ -47,7 +47,7 @@ const Admin = () => {
                 </Toolbar>
             </AppBar>
             <div className='manage-page-containers'>
-                <Switch style={{height: '100%'}}>
+                <Switch>
                     <Route path='/admin/categories' component={ManageCategories} />
                     <Route path='/admin/attributes' component={() => <div>manage attributes</div>} />
                     <Route path='/admin/category-attributes' component={() => <div>manage category attributes</div>} />

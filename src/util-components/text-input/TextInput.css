@@ -1,0 +1,7 @@
+.text-field {
+    margin-bottom: 1.3rem !important;
+}
+
+.text-field:first-child {
+    margin-top: 1.2rem !important;
+}

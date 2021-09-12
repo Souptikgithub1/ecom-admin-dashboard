@@ -1,5 +1,5 @@
 import {
-    alpha,
+    alpha, Button,
     Card,
     CardContent, Collapse, makeStyles, SvgIcon, withStyles,
 } from "@material-ui/core";
@@ -8,12 +8,9 @@ import './ManageCategories.css'
 import {TreeItem, TreeView} from "@material-ui/lab";
 import {useSpring, animated} from "react-spring";
 import {useState} from "react";
-
-const catListL1 = ['Global Item'];
-
-const catListL2 = [
-    'Electronics', 'Fashion'
-];
+import AddIcon from "@material-ui/icons/Add";
+import Modal from "../../util-components/modal/Modal";
+import AddCategory from "../add-category/AddCategory";
 
 function MinusSquare(props) {
     return (
@@ -131,16 +128,23 @@ const treeData = [
 const ManageCategories = () => {
 
     const classes = useStyles();
-
     const [category, setCategory] = useState('');
-
+    const [modalOpen, setModalOpen] = useState(false);
     const handleClickOnTreeItem = (level) => {
         setCategory(level.name)
     }
 
-    return <div>
+    return <div className='container'>
+        <div className='add-category-container'>
+            <Button
+                variant="contained"
+                color="secondary"
+                startIcon={<AddIcon />}
+                onClick={() => setModalOpen(true)}
+            >Add Category</Button>
+        </div>
         <Card variant='elevation' className='manage-categories-container'>
-            <CardContent style={{display: "flex", flexDirection: "row", alignItems: "start", padding: '1rem', height:'100%'}}>
+            <CardContent className='card-content'>
                 <div className="tree-view-category">
                     <TreeView
                         className={classes.root}
@@ -151,12 +155,12 @@ const ManageCategories = () => {
                     >
                         {
                             treeData.map((l1, il1) => {
-                                return <StyledTreeItem nodeId={il1+''} label={l1.name} onClick={() => handleClickOnTreeItem(l1)}>
+                                return <StyledTreeItem key={il1+''} nodeId={il1+''} label={l1.name} onClick={() => handleClickOnTreeItem(l1)}>
                                     {!!l1.children
                                         ? l1.children.map((l2, il2) =>
-                                        <StyledTreeItem nodeId={''+il1+il2} label={l2.name} onClick={() => handleClickOnTreeItem(l2)}>
-                                            {!!l2.children ? l2.children.map((l3, il3) => <StyledTreeItem nodeId={''+il1+il2+il3} label={l3.name} onClick={() => handleClickOnTreeItem(l3)}>
-                                                {!!l3.children ? l3.children.map((l4, il4) => <StyledTreeItem nodeId={''+il1+il2+il3+il4} label={l4.name} onClick={() => handleClickOnTreeItem(l4)}></StyledTreeItem>) : ''}
+                                        <StyledTreeItem key={''+il1+il2} nodeId={''+il1+il2} label={l2.name} onClick={() => handleClickOnTreeItem(l2)}>
+                                            {!!l2.children ? l2.children.map((l3, il3) => <StyledTreeItem key={''+il1+il2+il3} nodeId={''+il1+il2+il3} label={l3.name} onClick={() => handleClickOnTreeItem(l3)}>
+                                                {!!l3.children ? l3.children.map((l4, il4) => <StyledTreeItem key={''+il1+il2+il3+il4} nodeId={''+il1+il2+il3+il4} label={l4.name} onClick={() => handleClickOnTreeItem(l4)}></StyledTreeItem>) : ''}
                                             </StyledTreeItem>) : ''}
                                         </StyledTreeItem>) : ''
                                     }
@@ -172,6 +176,17 @@ const ManageCategories = () => {
 
             </CardContent>
         </Card>
+
+        <Modal
+            open={modalOpen}
+            setOpen={setModalOpen}
+            header='Add Categories'
+            style={{width: '40rem'}}
+        >
+            <div className='add-category-form-container'>
+                <AddCategory setModalOpen={setModalOpen}/>
+            </div>
+        </Modal>
     </div>
 }
 

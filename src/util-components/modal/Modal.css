@@ -1,0 +1,92 @@
+.modal-container {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+.modal-backdrop {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background: #111;
+    opacity: 0.8;
+}
+
+.modal-content-container {
+    z-index: 999999;
+    background: #fff;
+    top: 17%;
+    height: 70%;
+    width: 50%;
+    position: absolute;
+    animation: opac0 300ms ease-in-out;
+    border-radius: 0.3rem;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.opac1 {
+    animation: opac1 300ms ease-in-out;
+}
+
+.opac0 {
+    animation: opac0 300ms ease-in-out;
+}
+
+@keyframes opac1 {
+    from {
+        top: -300px;
+    }
+    to {
+        top: 17%;
+    }
+}
+
+@keyframes opac0 {
+    from {top: 17%}
+    to {top: -300px}
+}
+
+
+.close-icon-btn {
+    position: absolute;
+    top: -2.2rem;
+    right: -0.4rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ddd;
+}
+
+.close-icon-btn:hover {
+    cursor: pointer;
+}
+
+.modal-header {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-bottom: 1px solid #ddd;
+    padding: 0.6rem;
+    max-height: 3rem;
+}
+
+.modal-body {
+    flex: 9;
+    display: flex;
+    overflow-y: auto;
+}
