@@ -20,7 +20,7 @@ const AddCategory = ({setModalOpen, onComplete}) => {
     const [categoryName, setCategoryName] = useState('');
     const [categoryDescription, setCategoryDescription] = useState('');
     const [categoryDepth, setCategoryDepth] = useState(0);
-    const [activeIndicator, setActiveIndicator] = useState(false);
+    const [activeIndicator, setActiveIndicator] = useState(true);
     const [parentCategoryId, setParentCategoryId] = useState('');
 
     const [parentCategoryMenuList, setParentCategoryMenuList] = useState([]);
@@ -48,7 +48,7 @@ const AddCategory = ({setModalOpen, onComplete}) => {
         setCategoryDescription('')
         setCategoryDepth(0)
         setParentCategoryId('')
-        setActiveIndicator(false)
+        setActiveIndicator(true)
     }
 
     const disableButton = () => {
@@ -63,8 +63,8 @@ const AddCategory = ({setModalOpen, onComplete}) => {
 
                 res.data.forEach(x => {
                     menuList.push({value: x.categoryId, text: x.categoryName})
-                    setParentCategoryMenuList(menuList)
                 })
+                setParentCategoryMenuList(menuList)
             })
     }
 

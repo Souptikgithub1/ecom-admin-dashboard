@@ -1,12 +1,9 @@
 import {
-    alpha, Button,
+    Button,
     Card,
-    CardContent, Collapse, makeStyles, SvgIcon, withStyles,
+    CardContent
 } from "@material-ui/core";
-import PropTypes from 'prop-types';
 import './ManageCategories.css'
-import {TreeItem, TreeView} from "@material-ui/lab";
-import {useSpring, animated} from "react-spring";
 import {useEffect, useState} from "react";
 import AddIcon from "@material-ui/icons/Add";
 import Modal from "../../util-components/modal/Modal";
@@ -15,52 +12,6 @@ import axios from 'axios';
 import {CATEGORIES_URL} from "../../utils/ApiConstants";
 import CategoryTree from "../category-tree/CategoryTree";
 
-
-
-const treeData = [
-    {
-        name: 'Global Item',
-        children: [
-            {
-                name: 'Electronics',
-                children: [
-                    {
-                        name: 'Mobiles',
-                        children: [
-                            {name: 'Mi'},
-                            {name: 'Realme'},
-                            {name: 'OPPO'}
-                        ]
-                    },
-                    {
-                        name: 'Laptops',
-                        children: [
-                            {name: 'Lightweight Laptops'},
-                            {name: 'Gaming Laptops'}
-                        ]
-                    }
-                ]
-            },
-            {
-                name: 'Tv & Appliances',
-                children: [
-                    {name: 'Television'},
-                    {
-                        name: 'Air Conditioners',
-                        children: [
-                            {name: 'Inverter ACs'},
-                            {name: 'Window ACs'},
-                            {name: 'Split ACs'}
-                        ]
-                    },
-                    {name: 'Kitchen Appliances'}
-                ]
-            },
-            {name: 'Men'},
-            {name: 'Women'}
-        ]
-    }
-]
 
 const parentCats = ['Electronics', 'Tvs & Appliances', 'Men', 'Women']
 
@@ -72,6 +23,8 @@ const ManageCategories = () => {
 
     const [categories, setCategories] = useState([]);
 
+    const [catTreeData, setCatTreeData] = useState([]);
+
     useEffect(() => {
         getCategories()
     }, [])
@@ -80,7 +33,33 @@ const ManageCategories = () => {
     const getCategories = () => {
         axios.get(CATEGORIES_URL).then(res => {
             setCategories(res.data)
+            const catTree = [];
+            res.data.filter(cat => cat.depth === 0)
+                .forEach(cat0 => {
 
+                    cat0['children'] = []
+                    catTree.push(cat0)
+                    res.data.filter(cat => cat.depth === 1 && cat.parentCategoryId === cat0.categoryId)
+                        .forEach(cat1 => {
+
+                            cat1['children'] = []
+                            cat0['children'].push(cat1)
+                            res.data.filter(cat => cat.depth === 2 && cat.parentCategoryId === cat1.categoryId)
+                                .forEach(cat2 => {
+
+                                    cat2['children'] = []
+                                    cat1['children'].push(cat2)
+                                    res.data.filter(cat => cat.depth === 3 && cat.parentCategoryId === cat2.categoryId)
+                                        .forEach(cat3 => {
+
+                                            cat3['children'] = []
+                                            cat2['children'].push(cat3)
+                                        })
+                                })
+                        })
+                })
+            console.log('catTree',catTree)
+            setCatTreeData(catTree)
         })
     }
 
@@ -100,7 +79,7 @@ const ManageCategories = () => {
             <CardContent className='card-content'>
                 <div className="tree-view-category">
                     <CategoryTree
-                        treeData={treeData}
+                        treeData={catTreeData}
                         onSelectCategory={setCategory}
                         />
                 </div>

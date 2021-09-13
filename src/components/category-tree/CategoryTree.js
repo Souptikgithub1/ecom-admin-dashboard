@@ -4,25 +4,25 @@ import {alpha, Collapse, makeStyles, SvgIcon, withStyles} from "@material-ui/cor
 import {animated, useSpring} from "react-spring";
 import PropTypes from "prop-types";
 
-function MinusSquare(props) {
+const MinusSquare = (props) => {
     return (
-        <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
+        <SvgIcon fontSize="inherit" style={{ width: 14, height: 14, color: '#f50057' }} {...props}>
             {/* tslint:disable-next-line: max-line-length */}
             <path d="M22.047 22.074v0 0-20.147 0h-20.12v0 20.147 0h20.12zM22.047 24h-20.12q-.803 0-1.365-.562t-.562-1.365v-20.147q0-.776.562-1.351t1.365-.575h20.147q.776 0 1.351.575t.575 1.351v20.147q0 .803-.575 1.365t-1.378.562v0zM17.873 11.023h-11.826q-.375 0-.669.281t-.294.682v0q0 .401.294 .682t.669.281h11.826q.375 0 .669-.281t.294-.682v0q0-.401-.294-.682t-.669-.281z" />
         </SvgIcon>
     );
 }
 
-function PlusSquare(props) {
+const PlusSquare = (props) => {
     return (
-        <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
+        <SvgIcon fontSize="inherit" style={{ width: 14, height: 14, color: '#f50057' }} {...props}>
             {/* tslint:disable-next-line: max-line-length */}
             <path d="M22.047 22.074v0 0-20.147 0h-20.12v0 20.147 0h20.12zM22.047 24h-20.12q-.803 0-1.365-.562t-.562-1.365v-20.147q0-.776.562-1.351t1.365-.575h20.147q.776 0 1.351.575t.575 1.351v20.147q0 .803-.575 1.365t-1.378.562v0zM17.873 12.977h-4.923v4.896q0 .401-.281.682t-.682.281v0q-.375 0-.669-.281t-.294-.682v-4.896h-4.923q-.401 0-.682-.294t-.281-.669v0q0-.401.281-.682t.682-.281h4.923v-4.896q0-.401.294-.682t.669-.281v0q.401 0 .682.281t.281.682v4.896h4.923q.401 0 .682.281t.281.682v0q0 .375-.281.669t-.682.294z" />
         </SvgIcon>
     );
 }
 
-function CloseSquare(props) {
+const CloseSquare = (props) => {
     return (
         <SvgIcon className="close" fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
             {/* tslint:disable-next-line: max-line-length */}
@@ -31,7 +31,7 @@ function CloseSquare(props) {
     );
 }
 
-function TransitionComponent(props) {
+const TransitionComponent = (props) => {
     const style = useSpring({
         from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
         to: { opacity: props.in ? 1 : 0, transform: `translate3d(${props.in ? 0 : 20}px,0,0)` },
@@ -77,7 +77,7 @@ const CategoryTree = ({treeData, onSelectCategory}) => {
     const classes = useStyles();
 
     const handleClickOnTreeItem = (level) => {
-        onSelectCategory(level.name)
+        onSelectCategory(level.categoryName)
     }
 
 
@@ -90,12 +90,12 @@ const CategoryTree = ({treeData, onSelectCategory}) => {
   >
       {
           treeData.map((l1, il1) => {
-              return <StyledTreeItem key={il1+''} nodeId={il1+''} label={l1.name} onClick={() => handleClickOnTreeItem(l1)}>
+              return <StyledTreeItem key={il1+''} nodeId={il1+''} label={l1.categoryName} onClick={() => handleClickOnTreeItem(l1)}>
                   {!!l1.children
                       ? l1.children.map((l2, il2) =>
-                          <StyledTreeItem key={''+il1+il2} nodeId={''+il1+il2} label={l2.name} onClick={() => handleClickOnTreeItem(l2)}>
-                              {!!l2.children ? l2.children.map((l3, il3) => <StyledTreeItem key={''+il1+il2+il3} nodeId={''+il1+il2+il3} label={l3.name} onClick={() => handleClickOnTreeItem(l3)}>
-                                  {!!l3.children ? l3.children.map((l4, il4) => <StyledTreeItem key={''+il1+il2+il3+il4} nodeId={''+il1+il2+il3+il4} label={l4.name} onClick={() => handleClickOnTreeItem(l4)}></StyledTreeItem>) : ''}
+                          <StyledTreeItem key={''+il1+il2} nodeId={''+il1+il2} label={l2.categoryName} onClick={() => handleClickOnTreeItem(l2)}>
+                              {!!l2.children ? l2.children.map((l3, il3) => <StyledTreeItem key={''+il1+il2+il3} nodeId={''+il1+il2+il3} label={l3.categoryName} onClick={() => handleClickOnTreeItem(l3)}>
+                                  {!!l3.children ? l3.children.map((l4, il4) => <StyledTreeItem key={''+il1+il2+il3+il4} nodeId={''+il1+il2+il3+il4} label={l4.categoryName} onClick={() => handleClickOnTreeItem(l4)}></StyledTreeItem>) : ''}
                               </StyledTreeItem>) : ''}
                           </StyledTreeItem>) : ''
                   }
