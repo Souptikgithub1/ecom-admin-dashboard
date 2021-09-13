@@ -12,7 +12,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Modal from "../../util-components/modal/Modal";
 import AddCategory from "../add-category/AddCategory";
 import axios from 'axios';
-import {CATEGORIES_URL} from "../../utils/ApiCOnstants";
+import {CATEGORIES_URL} from "../../utils/ApiConstants";
 
 function MinusSquare(props) {
     return (
@@ -135,8 +135,10 @@ const ManageCategories = () => {
     const [category, setCategory] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
 
+    const [categories, setCategories] = useState([]);
+
     useEffect(() => {
-        axios.get(`${CATEGORIES_URL}/Electronics`).then(res => console.log(res))
+        axios.get(CATEGORIES_URL).then(res => setCategories(res.data))
     }, [])
 
 
@@ -182,6 +184,7 @@ const ManageCategories = () => {
                 </div>
                 <div className="category-edit">
                     Edit {category}
+                    {categories.map(cat => <div key={cat.categoryId}>{cat.categoryName}</div>)}
                 </div>
 
             </CardContent>
@@ -190,10 +193,10 @@ const ManageCategories = () => {
         <Modal
             open={modalOpen}
             setOpen={setModalOpen}
-            header='Add Categories'
+            header='Add Category'
         >
             <div className='add-category-form-container'>
-                <AddCategory setModalOpen={setModalOpen} parentCategories={parentCats}/>
+                <AddCategory setModalOpen={setModalOpen} categories={categories}/>
             </div>
         </Modal>
     </div>

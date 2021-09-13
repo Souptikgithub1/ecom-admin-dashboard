@@ -3,7 +3,7 @@ import React from "react";
 
 import '../text-input/TextInput.css'
 
-const SelectDropDown = ({labelId, id, value, setValue, menuList}) => {
+const SelectDropDown = ({labelId, id, value, onChange, menuList}) => {
 
 
   return <Select
@@ -16,9 +16,9 @@ const SelectDropDown = ({labelId, id, value, setValue, menuList}) => {
       MenuProps={{
           style: {zIndex: 99999}
       }}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={(e) => onChange(e.target.value)}
   >
-      {menuList.map((itemVal, index) => <MenuItem key={index} value={itemVal}>{itemVal}</MenuItem>)}
+      {menuList.map((item, index) => <MenuItem key={index} value={item.value}>{item.text}</MenuItem>)}
   </Select>
 }
 

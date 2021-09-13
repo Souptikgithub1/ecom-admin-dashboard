@@ -59,25 +59,28 @@
 
 .close-icon-btn {
     position: absolute;
-    top: .9rem;
+    top: .7rem;
     right: .9rem;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #ddd;
     padding: .3rem;
-    background: #e7e7e7;
     border-radius: 50%;
 }
 
 .close-icon {
-    font-size: 2rem;
+    font-size: 2rem !important;
     color: #515151;
 
 }
 
 .close-icon-btn:hover {
     cursor: pointer;
+}
+
+.close-icon-btn:hover .close-icon{
+    color: #111;
 }
 
 .modal-header {
@@ -88,7 +91,7 @@
     font-size: 1.3rem;
     text-transform: uppercase;
     font-weight: 500;
-    border-bottom: 1px solid #ddd;
+    /*border-bottom: 1px solid #ddd;*/
     padding: 0.6rem;
     max-height: 3rem;
 }
