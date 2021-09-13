@@ -13,7 +13,7 @@ import axios from "axios";
 import {CATEGORIES_URL, GET_CATEGORIES_BY_DEPTH_URL} from "../../utils/ApiConstants";
 
 
-const AddCategory = ({setModalOpen}) => {
+const AddCategory = ({setModalOpen, onComplete}) => {
 
     const {setLoading} = useAppContext()
 
@@ -32,11 +32,15 @@ const AddCategory = ({setModalOpen}) => {
         axios.post(CATEGORIES_URL, category)
             .then(res => {
                 console.log(res)
-
-                setLoading(false)
-                setModalOpen(false)
-                clearFormValues()
+                onComplete(true)
+                resetAll()
             })
+    }
+
+    const resetAll = () => {
+        setLoading(false)
+        setModalOpen(false)
+        clearFormValues()
     }
 
     const clearFormValues = () => {
