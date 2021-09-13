@@ -11,12 +11,14 @@ import AddCategory from "../add-category/AddCategory";
 import axios from 'axios';
 import {CATEGORIES_URL} from "../../utils/ApiConstants";
 import CategoryTree from "../category-tree/CategoryTree";
+import {useAppContext} from "../../context/AppContext";
 
 
 const parentCats = ['Electronics', 'Tvs & Appliances', 'Men', 'Women']
 
 const ManageCategories = () => {
 
+    const {setLoading} = useAppContext();
 
     const [category, setCategory] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
@@ -26,6 +28,7 @@ const ManageCategories = () => {
     const [catTreeData, setCatTreeData] = useState([]);
 
     useEffect(() => {
+        setLoading(true)
         getCategories()
     }, [])
 
@@ -60,6 +63,7 @@ const ManageCategories = () => {
                 })
             console.log('catTree',catTree)
             setCatTreeData(catTree)
+            setLoading(false)
         })
     }
 
@@ -84,8 +88,7 @@ const ManageCategories = () => {
                         />
                 </div>
                 <div className="category-edit">
-                    Edit {category}
-                    {categories.map(cat => <div key={cat.categoryId}>{cat.categoryName}</div>)}
+                    {!!category ? `Edit ${category}` : ''}
                 </div>
             </CardContent>
         </Card>
