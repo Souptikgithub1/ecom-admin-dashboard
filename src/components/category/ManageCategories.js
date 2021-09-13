@@ -7,10 +7,12 @@ import PropTypes from 'prop-types';
 import './ManageCategories.css'
 import {TreeItem, TreeView} from "@material-ui/lab";
 import {useSpring, animated} from "react-spring";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import AddIcon from "@material-ui/icons/Add";
 import Modal from "../../util-components/modal/Modal";
 import AddCategory from "../add-category/AddCategory";
+import axios from 'axios';
+import {CATEGORIES_URL} from "../../utils/ApiCOnstants";
 
 function MinusSquare(props) {
     return (
@@ -132,6 +134,12 @@ const ManageCategories = () => {
     const classes = useStyles();
     const [category, setCategory] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
+
+    useEffect(() => {
+        axios.get(`${CATEGORIES_URL}/Electronics`).then(res => console.log(res))
+    }, [])
+
+
     const handleClickOnTreeItem = (level) => {
         setCategory(level.name)
     }
