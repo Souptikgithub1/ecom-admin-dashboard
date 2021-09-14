@@ -12,6 +12,8 @@ import axios from 'axios';
 import {CATEGORIES_URL} from "../../utils/ApiConstants";
 import CategoryTree from "../category-tree/CategoryTree";
 import {useAppContext} from "../../context/AppContext";
+import TableView from "../../util-components/table/TableView";
+import {camelToSpace} from "../../utils/CommonUtils";
 
 
 const parentCats = ['Electronics', 'Tvs & Appliances', 'Men', 'Women']
@@ -20,7 +22,7 @@ const ManageCategories = () => {
 
     const {setLoading} = useAppContext();
 
-    const [category, setCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
 
     const [categories, setCategories] = useState([]);
@@ -31,6 +33,10 @@ const ManageCategories = () => {
         setLoading(true)
         getCategories()
     }, [])
+
+    const handleOnComplete = () => {
+        getCategories()
+    }
 
 
     const getCategories = () => {
@@ -61,7 +67,6 @@ const ManageCategories = () => {
                                 })
                         })
                 })
-            console.log('catTree',catTree)
             setCatTreeData(catTree)
             setLoading(false)
         })
@@ -84,11 +89,19 @@ const ManageCategories = () => {
                 <div className="tree-view-category">
                     <CategoryTree
                         treeData={catTreeData}
-                        onSelectCategory={setCategory}
+                        onSelectCategory={setSelectedCategory}
                         />
                 </div>
                 <div className="category-edit">
-                    {!!category ? `Edit ${category}` : ''}
+                    {!!selectedCategory
+                        ? <TableView
+                            tableHeaders={Object.keys(selectedCategory)
+                                .filter(key => !['children', 'parentCategoryId', 'categoryId'].includes(key))
+                                .map((key, index) => { return { id: key, numeric: !!index , disablePadding: false, label: camelToSpace(key) } })}
+                            rows={[...selectedCategory['children']]}
+                            headerName={selectedCategory.categoryName} />
+                        : ''}
+
                 </div>
             </CardContent>
         </Card>
@@ -100,7 +113,7 @@ const ManageCategories = () => {
             <div className='add-category-form-container'>
                 <AddCategory
                     setModalOpen={setModalOpen}
-                    onComplete={(event) => getCategories()}
+                    onComplete={handleOnComplete}
                 />
             </div>
         </Modal>
