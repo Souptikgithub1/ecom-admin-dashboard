@@ -7,10 +7,10 @@ import {useEffect} from "react";
 
 
 const App = () => {
-    const {isLoading} = useAppContext();
+    const {isLoading, getCategories} = useAppContext();
     useEffect(() => {
-        console.log(isLoading)
-    })
+        getCategories().then(res => {})
+    }, [])
   return (
     <div className='app-container'>
       <Switch>

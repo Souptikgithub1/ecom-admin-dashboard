@@ -4,6 +4,7 @@ import { Route, Switch} from "react-router-dom";
 import ManageCategories from "../category/ManageCategories";
 import {AppBar, Toolbar, Typography} from "@material-ui/core";
 import {useEffect, useState} from "react";
+import {useAppContext} from "../../context/AppContext";
 
 const navMenuItems = [
     {
@@ -27,7 +28,6 @@ const navMenuItems = [
 ]
 
 const Admin = () => {
-
     const [appBarHeader, setAppBarHeader] = useState('')
 
     useEffect(() => {

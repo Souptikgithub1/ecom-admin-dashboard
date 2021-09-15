@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -14,10 +14,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import EditIcon from "@material-ui/icons/Edit";
+import AddIcon from "@material-ui/icons/Add";
+import {Button} from "@material-ui/core";
+import AddCategory from "../../components/add-category/AddCategory";
+import Modal from "../modal/Modal";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -98,6 +100,8 @@ const useToolbarStyles = makeStyles((theme) => ({
     root: {
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(1),
+        display: "flex",
+        justifyContent: "space-between"
     },
     highlight:
         theme.palette.type === 'light'
@@ -109,14 +113,12 @@ const useToolbarStyles = makeStyles((theme) => ({
                 color: theme.palette.text.primary,
                 backgroundColor: theme.palette.secondary.dark,
             },
-    title: {
-        flex: '1 1 100%',
-    },
+
 }));
 
 const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
-    const { numSelected, headerName } = props;
+    const { numSelected, headerName, setModalOpen } = props;
 
     return (
         <Toolbar
@@ -134,19 +136,12 @@ const EnhancedTableToolbar = (props) => {
                 </Typography>
             )}
 
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                <Tooltip title="Filter list">
-                    <IconButton aria-label="filter list">
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
-            )}
+            <Button
+                variant="contained"
+                color="secondary"
+                startIcon={<AddIcon />}
+                onClick={() => setModalOpen(true)}
+            >Add Child</Button>
         </Toolbar>
     );
 };
@@ -179,7 +174,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const TableView = ({ rows, tableHeaders ,headerName }) => {
+const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
 
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -188,6 +183,11 @@ const TableView = ({ rows, tableHeaders ,headerName }) => {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const handleOnComplete = () => {
+    }
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -219,7 +219,10 @@ const TableView = ({ rows, tableHeaders ,headerName }) => {
 
     return <div className={classes.root}>
         <Paper className={classes.paper}>
-            <EnhancedTableToolbar numSelected={selected.length} headerName={headerName} />
+            <EnhancedTableToolbar
+                numSelected={selected.length}
+                headerName={selectedCategory.categoryName}
+                setModalOpen={setModalOpen} />
             <TableContainer>
                 <Table
                     className={classes.table}
@@ -284,7 +287,20 @@ const TableView = ({ rows, tableHeaders ,headerName }) => {
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
         </Paper>
+
+        <Modal
+            open={modalOpen}
+            setOpen={setModalOpen}
+            header={`add child for ${selectedCategory.categoryName}`}>
+            <div className='add-category-form-container'>
+                <AddCategory
+                    setModalOpen={setModalOpen}
+                    selectedCategory={selectedCategory}
+                    onComplete={handleOnComplete}
+                />
+            </div>
+        </Modal>
     </div>
 }
 
-export default TableView
+export default CategoryTableView
