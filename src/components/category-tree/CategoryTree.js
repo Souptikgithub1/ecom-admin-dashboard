@@ -3,7 +3,6 @@ import {TreeItem, TreeView} from "@material-ui/lab";
 import {alpha, Collapse, makeStyles, SvgIcon, withStyles} from "@material-ui/core";
 import {animated, useSpring} from "react-spring";
 import PropTypes from "prop-types";
-import {useEffect, useState} from "react";
 
 const MinusSquare = (props) => {
     return (
@@ -82,29 +81,31 @@ const CategoryTree = ({treeData, onSelectCategory}) => {
         onSelectCategory(level)
     }
 
-  return <TreeView
-      className={classes.root}
-      /*defaultExpanded={[treeData[0]['categoryId']]}*/
-      defaultCollapseIcon={<MinusSquare />}
-      defaultExpandIcon={<PlusSquare />}
-      defaultEndIcon={<div />}
-  >
-      {
-          treeData.map((l1, il1) => {
-              return <StyledTreeItem key={l1.categoryId} nodeId={l1.categoryId} label={l1.categoryName} onClick={() => handleClickOnTreeItem(l1)}>
-                  {!!l1.children
-                      ? l1.children.map((l2, il2) =>
-                          <StyledTreeItem key={l2.categoryId} nodeId={l2.categoryId} label={l2.categoryName} onClick={() => handleClickOnTreeItem(l2)}>
-                              {!!l2.children ? l2.children.map((l3, il3) => <StyledTreeItem key={l3.categoryId} nodeId={l3.categoryId} label={l3.categoryName} onClick={() => handleClickOnTreeItem(l3)}>
-                                  {!!l3.children ? l3.children.map((l4, il4) => <StyledTreeItem key={l4.categoryId} nodeId={l4.categoryId} label={l4.categoryName} onClick={() => handleClickOnTreeItem(l4)}></StyledTreeItem>) : ''}
-                              </StyledTreeItem>) : ''}
-                          </StyledTreeItem>) : ''
-                  }
-              </StyledTreeItem>
-          })
-      }
+  return <div>
+      <TreeView
+          className={classes.root}
+          /*defaultExpanded={[treeData[0]['categoryId']]}*/
+          defaultCollapseIcon={<MinusSquare />}
+          defaultExpandIcon={<PlusSquare />}
+          defaultEndIcon={<div />}
+      >
+          {
+              treeData.map((l1, il1) => {
+                  return <StyledTreeItem key={l1.categoryId} nodeId={l1.categoryId} label={l1.categoryName} onClick={() => handleClickOnTreeItem(l1)}>
+                      {!!l1.children
+                          ? l1.children.map((l2, il2) =>
+                              <StyledTreeItem key={l2.categoryId} nodeId={l2.categoryId} label={l2.categoryName} onClick={() => handleClickOnTreeItem(l2)}>
+                                  {!!l2.children ? l2.children.map((l3, il3) => <StyledTreeItem key={l3.categoryId} nodeId={l3.categoryId} label={l3.categoryName} onClick={() => handleClickOnTreeItem(l3)}>
+                                      {!!l3.children ? l3.children.map((l4, il4) => <StyledTreeItem key={l4.categoryId} nodeId={l4.categoryId} label={l4.categoryName} ></StyledTreeItem>) : ''}
+                                  </StyledTreeItem>) : ''}
+                              </StyledTreeItem>) : ''
+                      }
+                  </StyledTreeItem>
+              })
+          }
 
-  </TreeView>
+      </TreeView>
+  </div>
 }
 
 export default CategoryTree

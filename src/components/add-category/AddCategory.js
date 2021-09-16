@@ -1,16 +1,12 @@
 import TextInput from "../../util-components/text-input/TextInput";
 import {
     Button,
-    InputLabel,
     Switch
 } from "@material-ui/core";
 import React, {useState} from "react";
 import '../../util-components/text-input/TextInput.css'
 import './AddCategory.css'
-import SelectDropDown from "../../util-components/SelectDropDown/SelectDropDown";
 import {useAppContext} from "../../context/AppContext";
-import axios from "axios";
-import {CATEGORIES_URL, GET_CATEGORIES_BY_DEPTH_URL} from "../../utils/ApiConstants";
 
 
 const AddCategory = ({setModalOpen, onComplete, selectedCategory}) => {

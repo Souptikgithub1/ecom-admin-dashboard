@@ -20,7 +20,10 @@ const ManageCategories = () => {
     const [catTreeData, setCatTreeData] = useState([]);
 
     useEffect(() => {
-        setCatTreeData(createCategoryTree(categories))
+        const catTree = createCategoryTree(categories)
+        setCatTreeData(catTree)
+        setSelectedCategory(catTree[0])
+
     }, [categories])
 
 

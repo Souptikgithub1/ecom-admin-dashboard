@@ -17,6 +17,7 @@ const EcomListItem = (props) => {
             $(event.target).addClass('selected')
         }
 
+        //navigate to desired page
         history.push(props.to)
     }
 

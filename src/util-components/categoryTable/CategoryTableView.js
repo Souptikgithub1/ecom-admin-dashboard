@@ -182,7 +182,7 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -278,7 +278,7 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[5, 10]}
                 component="div"
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
