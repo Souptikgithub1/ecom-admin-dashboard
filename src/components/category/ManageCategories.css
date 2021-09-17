@@ -1,7 +1,6 @@
 .container {
     display: flex;
     flex-direction: column;
-    min-height: 89.5vh;
 }
 
 .add-category-container {
@@ -12,12 +11,7 @@
 }
 
 
-.manage-categories-container {
-    flex: 9;
-    overflow: visible !important;
-    display: flex;
-    flex-direction: column;
-}
+
 
 .tree-view-category {
     flex: 3;
@@ -30,12 +24,7 @@
     padding-left: 1rem;
 }
 
-.card-content {
-    display: flex;
-    align-items: stretch;
-    padding: 1rem !important;
-    flex: 1;
-}
+
 
 
 .add-category-form-container {
@@ -45,3 +34,4 @@
     align-items: center;
     padding: 0 6rem;
 }
+

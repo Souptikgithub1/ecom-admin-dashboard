@@ -16,7 +16,8 @@ const RightNav = ({navMenuItems}) => {
                         <span className='menu-header-text' >Ecom Admin</span>
                     </ListItem>
                     <WhiteDivider />
-
+                </List>
+                <List component="nav" aria-label="main mailbox folders" >
                     {navMenuItems.map((item, index) => <EcomListItem
                         key={index}
                             name={item.name}

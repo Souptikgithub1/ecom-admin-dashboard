@@ -7,7 +7,11 @@
 }
 
 .nav-panel {
-  flex: 3;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 260px;
 
   box-shadow: 0 10px 30px -12px rgba(0 , 0 , 0 , 0.42), 0 4px 25px 0px rgba(0 , 0 , 0 ,  0.12), 0 8px 10px -5px rgba(0 , 0 , 0 , 0.2);
   transition-duration: .2s, .2s, .35s;
@@ -16,12 +20,27 @@
 }
 
 .dashboard-content {
-  flex: 17;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  margin-left: 18rem;
+  margin-right: 1.5rem;
 }
 
 .manage-page-containers {
-  height: 100%;
-  margin: 1rem;
+  margin: 3rem 0;
+  margin-bottom: 0;
+}
+
+.nav-bar-top {
+  display: flex;
+  align-items: center;
+  /*margin: 1.2rem 0;*/
+  justify-content: space-between;
+  min-height: 4rem;
+}
+
+.app-header {
+  font-size: 1.2rem;
+  font-weight: 300;
 }

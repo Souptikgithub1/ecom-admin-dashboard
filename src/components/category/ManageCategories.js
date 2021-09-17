@@ -1,14 +1,10 @@
-import {
-    Button,
-    Card,
-    CardContent
-} from "@material-ui/core";
 import './ManageCategories.css'
 import {useEffect, useState} from "react";
 import CategoryTree from "../category-tree/CategoryTree";
 import {useAppContext} from "../../context/AppContext";
 import CategoryTableView from "../../util-components/categoryTable/CategoryTableView";
 import {camelToSpace, createCategoryTree} from "../../utils/CommonUtils";
+import CardComponent from "../../util-components/card-component/CardComponent";
 
 
 const ManageCategories = () => {
@@ -30,29 +26,25 @@ const ManageCategories = () => {
 
 
     return <div className='container'>
-        <Card variant='elevation' className='manage-categories-container'>
-            <CardContent className='card-content'>
-                <div className="tree-view-category">
-                    <CategoryTree
-                        treeData={catTreeData}
-                        onSelectCategory={setSelectedCategory}
-                        />
-                </div>
-                <div className="category-edit">
-                    {!!selectedCategory
-                        ? <CategoryTableView
-                            tableHeaders={Object.keys(selectedCategory)
-                                .filter(key => !['children', 'parentCategoryId', 'categoryId'].includes(key))
-                                .map((key, index) => { return { id: key, numeric: !!index , disablePadding: false, label: camelToSpace(key) } })}
-                            rows={[...selectedCategory['children']]}
-                            selectedCategory={selectedCategory} />
-                        : ''}
+        <CardComponent iconName='category' headerText='Manager Category'>
+            <div className="tree-view-category">
+                <CategoryTree
+                    treeData={catTreeData}
+                    onSelectCategory={setSelectedCategory}
+                />
+            </div>
+            <div className="category-edit">
+                {!!selectedCategory
+                    ? <CategoryTableView
+                        tableHeaders={Object.keys(selectedCategory)
+                            .filter(key => !['children', 'parentCategoryId', 'categoryId'].includes(key))
+                            .map((key, index) => { return { id: key, numeric: !!index , disablePadding: false, label: camelToSpace(key) } })}
+                        rows={[...selectedCategory['children']]}
+                        selectedCategory={selectedCategory} />
+                    : ''}
 
-                </div>
-            </CardContent>
-        </Card>
-
-
+            </div>
+        </CardComponent>
     </div>
 }
 
