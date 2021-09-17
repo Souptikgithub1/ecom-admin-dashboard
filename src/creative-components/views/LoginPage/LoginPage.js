@@ -39,7 +39,7 @@ export default function LoginPage(props) {
   useEffect(() => {
       setTimeout(function () {
           setCardAnimation("");
-      }, 200);
+      }, 700);
   }, [])
   const classes = useStyles();
   const { ...rest } = props;

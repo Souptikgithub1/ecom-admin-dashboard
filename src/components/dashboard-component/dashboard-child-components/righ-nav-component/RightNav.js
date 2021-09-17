@@ -44,7 +44,11 @@ const RightNav = ({navMenuItems}) => {
                             >
                                 <div style={{display: 'flex', alignItems: 'center'}}>
                                     <Icon>account_circle</Icon>
-                                    <span className='menu-header-user-text' >Hello, {user.email}</span>
+                                    <span className='menu-header-user-text' >
+                                        Hi, {!!user.email && user.email.length > 12
+                                                ? `${user.email.split('.').join(' ').substring(0, 12)} ...`
+                                                : user.email}
+                                    </span>
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails style={{paddingTop: 0, paddingBottom: 0}}>

@@ -39,7 +39,10 @@
 
 .menu-header-user-text {
     margin-left: 10px;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 300;
+    width: 140px;
+    text-transform: capitalize;
 }
 
 .menu-header-user-option-item {
