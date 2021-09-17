@@ -9,7 +9,7 @@ import CardComponent from "../../util-components/card-component/CardComponent";
 
 const ManageCategories = () => {
 
-    const {setLoading, categories} = useAppContext();
+    const {categories} = useAppContext();
 
     const [selectedCategory, setSelectedCategory] = useState(null);
 

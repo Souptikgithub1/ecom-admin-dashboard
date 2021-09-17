@@ -11,7 +11,7 @@ import {useAppContext} from "../../context/AppContext";
 
 const AddCategory = ({setModalOpen, onComplete, selectedCategory}) => {
 
-    const {setLoading, addCategory} = useAppContext()
+    const {addCategory} = useAppContext()
 
     const [categoryName, setCategoryName] = useState('');
     const [categoryDescription, setCategoryDescription] = useState('');

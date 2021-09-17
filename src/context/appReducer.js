@@ -1,4 +1,4 @@
-import {ADD_CATEGORY, SET_CATEGORIES, SET_LOADING} from "../utils/StringConstants";
+import {ADD_CATEGORY, LOGIN, SET_CATEGORIES, SET_LOADING} from "../utils/StringConstants";
 
 const appReducer = (state, action) => {
     switch (action.type) {
@@ -10,6 +10,8 @@ const appReducer = (state, action) => {
             const categories = [...state.categories]
             categories.push(action.payload)
             return {...state, categories}
+
+        case LOGIN: return {...state, user: action.payload}
     }
 }
 

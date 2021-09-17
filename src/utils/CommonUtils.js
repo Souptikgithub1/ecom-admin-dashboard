@@ -1,3 +1,5 @@
+import {LOCAL_STORAGE_USER} from "./StringConstants";
+
 export const camelToSpace = (text) => {
     const result = text.replace(/([A-Z])/g, " $1");
     return result.charAt(0).toUpperCase() + result.slice(1);
@@ -30,4 +32,8 @@ export const createCategoryTree = (categoryList) => {
                 })
         })
     return catTree
+}
+
+export const getUser = () => {
+    return localStorage.getItem(LOCAL_STORAGE_USER)
 }

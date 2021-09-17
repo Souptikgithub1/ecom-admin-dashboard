@@ -1,10 +1,19 @@
 import React, {useContext, useReducer} from 'react';
 import appReducer from "./appReducer";
-import {ADD_CATEGORY, FAILURE, SET_CATEGORIES, SET_LOADING, SUCCESS} from "../utils/StringConstants";
+import {
+    ADD_CATEGORY,
+    FAILURE,
+    LOCAL_STORAGE_USER,
+    LOGIN,
+    SET_CATEGORIES,
+    SET_LOADING,
+    SUCCESS
+} from "../utils/StringConstants";
 import axios from 'axios';
 import {CATEGORIES_URL} from "../utils/ApiConstants";
 
 const initState = {
+    user: null,
     categories: [],
     isLoading: false
 };
@@ -41,8 +50,33 @@ const AppProvider = ({children}) => {
                 setLoading(false)
                 return Promise.resolve(SUCCESS)
             }).catch(err => {
+                setLoading(false)
                 return Promise.resolve(FAILURE)
             })
+    }
+
+    const login = (loginPayload) => {
+        setLoading(true)
+        if (loginPayload.password === '1234') {
+            dispatch({type: LOGIN, payload: loginPayload})
+            localStorage.setItem(LOCAL_STORAGE_USER, JSON.stringify(loginPayload))
+            setLoading(false)
+            return Promise.resolve(SUCCESS)
+        } else {
+            setLoading(false)
+            return Promise.resolve(FAILURE)
+        }
+    }
+
+    const autoLogin = async () => {
+        const user = localStorage.getItem(LOCAL_STORAGE_USER)
+        if (!!user) {
+            console.log('autologin', user)
+            dispatch({type: LOGIN, payload: JSON.parse(user)})
+            return (SUCCESS)
+        } else {
+            return (FAILURE)
+        }
     }
 
     return (
@@ -51,7 +85,9 @@ const AppProvider = ({children}) => {
                 ...state,
                 setLoading,
                 getCategories,
-                addCategory
+                addCategory,
+                login,
+                autoLogin
             }}
         >{children}</AppContext.Provider>
     )

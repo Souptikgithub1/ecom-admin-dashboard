@@ -16,7 +16,6 @@ import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from "@material-ui/icons/Edit";
-import AddIcon from "@material-ui/icons/Add";
 import {Button} from "@material-ui/core";
 import AddCategory from "../../components/add-category/AddCategory";
 import Modal from "../modal/Modal";
@@ -48,7 +47,7 @@ function stableSort(array, comparator) {
 }
 
 function EnhancedTableHead(props) {
-    const { tableHeaders, classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+    const { tableHeaders, classes, order, orderBy, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
@@ -144,7 +143,7 @@ const EnhancedTableToolbar = (props) => {
             <Button
                 variant="contained"
                 color="secondary"
-                startIcon={<AddIcon />}
+
                 onClick={() => setModalOpen(true)}
             >Add Child</Button>
         </Toolbar>
@@ -186,7 +185,7 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
+    const [dense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(8);
 
     const [modalOpen, setModalOpen] = useState(false);

@@ -5,6 +5,7 @@ import ManageCategories from "../category/ManageCategories";
 import {Icon} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import CardComponent from "../../util-components/card-component/CardComponent";
+import {useAppContext} from "../../context/AppContext";
 
 const navMenuItems = [
     {
@@ -29,6 +30,10 @@ const navMenuItems = [
 
 const Admin = () => {
     const [appBarHeader, setAppBarHeader] = useState('')
+    const {getCategories} = useAppContext();
+    useEffect(() => {
+        getCategories().then(res => {})
+    }, [])
 
     useEffect(() => {
         const arr = window.location.href.split('/');
@@ -41,7 +46,10 @@ const Admin = () => {
         <div className='dashboard-content'>
             <div className='nav-bar-top'>
                 <div className='app-header'>{appBarHeader}</div>
-                <div className='nav-icons-right'><Icon>notifications</Icon></div>
+                <div className='nav-icons-right'>
+                    <Icon className='nav-icon'>notifications</Icon>
+                    <Icon className='nav-icon'>person</Icon>
+                </div>
             </div>
             <div className='manage-page-containers'>
                 <Switch>
