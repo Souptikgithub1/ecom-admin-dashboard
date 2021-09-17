@@ -5,10 +5,13 @@ import Loader from "./util-components/loader/Loader";
 import {useAppContext} from "./context/AppContext";
 import {getUser} from "./utils/CommonUtils";
 import LoginPage from "./creative-components/views/LoginPage/LoginPage";
+import React from "react";
+import {Snackbar} from "@material-ui/core";
+import {Alert} from "@material-ui/lab";
 
 
 const App = () => {
-    const {isLoading} = useAppContext();
+    const {isLoading, showSnack} = useAppContext();
 
   return (
     <div className='app-container'>
@@ -21,6 +24,12 @@ const App = () => {
         <Route path='/login'>{!!getUser() ? <Redirect to='/admin/categories' /> : <LoginPage />}</Route>
       </Switch>
         {!!isLoading ? <Loader /> : ''}
+
+            <Snackbar open={!!showSnack.show} autoHideDuration={3000} >
+                <Alert elevation={6} variant='filled' severity={showSnack.color} sx={{ width: '100%' }}>
+                    {showSnack.message}
+                </Alert>
+            </Snackbar>
     </div>
   );
 }

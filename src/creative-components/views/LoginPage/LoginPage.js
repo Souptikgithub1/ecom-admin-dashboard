@@ -18,7 +18,11 @@ import CustomInput from "../../components/CustomInput/CustomInput.js";
 
 import styles from "../../assets/jss/material-kit-react/views/loginPage.js";
 
-import image from "../../assets/img/bg7.jpg";
+import image1 from "../../assets/img/big1.jpeg";
+import image2 from "../../assets/img/bg.jpg";
+import image3 from "../../assets/img/bg2.jpg";
+import image4 from "../../assets/img/bg3.jpg";
+import image5 from "../../assets/img/bg7.jpg";
 import {useAppContext} from "../../../context/AppContext";
 import {useHistory} from "react-router-dom";
 import {SUCCESS} from "../../../utils/StringConstants";
@@ -28,10 +32,11 @@ const useStyles = makeStyles(styles);
 
 export default function LoginPage(props) {
 
-    const {login} = useAppContext()
+    const {login, showSnackBar} = useAppContext()
 
     const history = useHistory();
 
+    const [images, setImages] = useState([])
   const [cardAnimaton, setCardAnimation] = useState("cardHidden");
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -41,6 +46,12 @@ export default function LoginPage(props) {
           setCardAnimation("");
       }, 700);
   }, [])
+
+    useEffect(() => {
+        setImages([image1, image2, image3, image4, image5, image1, image2, image3, image4, image5 ])
+    }, [])
+
+
   const classes = useStyles();
   const { ...rest } = props;
 
@@ -69,7 +80,7 @@ export default function LoginPage(props) {
         e.preventDefault()
         login({email, password}).then((res) => {
             if (res === SUCCESS) history.push('/admin/categories')
-            else console.log('wrong credentials')
+            else showSnackBar({message: 'Wrong Credentials!!', color: 'error', show: true})
         })
 
     }
@@ -85,7 +96,7 @@ export default function LoginPage(props) {
       <div
         className={classes.pageHeader}
         style={{
-          backgroundImage: "url(" + image + ")",
+          backgroundImage: "url(" + image5 + ")",
           backgroundSize: "cover",
           backgroundPosition: "top center",
         }}

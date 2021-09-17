@@ -1,4 +1,4 @@
-import {ADD_CATEGORY, LOGIN, SET_CATEGORIES, SET_LOADING} from "../utils/StringConstants";
+import {ADD_CATEGORY, LOGIN, SET_CATEGORIES, SET_LOADING, SHOW_SNACK} from "../utils/StringConstants";
 
 const appReducer = (state, action) => {
     switch (action.type) {
@@ -12,6 +12,8 @@ const appReducer = (state, action) => {
             return {...state, categories}
 
         case LOGIN: return {...state, user: action.payload}
+
+        case SHOW_SNACK: return {...state, showSnack: action.payload}
     }
 }
 

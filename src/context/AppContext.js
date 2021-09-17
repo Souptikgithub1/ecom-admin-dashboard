@@ -6,7 +6,7 @@ import {
     LOCAL_STORAGE_USER,
     LOGIN,
     SET_CATEGORIES,
-    SET_LOADING,
+    SET_LOADING, SHOW_SNACK,
     SUCCESS
 } from "../utils/StringConstants";
 import axios from 'axios';
@@ -15,7 +15,8 @@ import {CATEGORIES_URL} from "../utils/ApiConstants";
 const initState = {
     user: null,
     categories: [],
-    isLoading: false
+    isLoading: false,
+    showSnack: {message: '', color: 'success', show: false}
 };
 
 const AppContext = React.createContext();
@@ -79,6 +80,14 @@ const AppProvider = ({children}) => {
         }
     }
 
+    const showSnackBar = (snackPayload) => {
+        console.log(snackPayload)
+        dispatch({type: SHOW_SNACK, payload: snackPayload})
+        setTimeout(() => {
+            dispatch({type: SHOW_SNACK, payload: {...snackPayload, show: false}})
+        }, 3000)
+    }
+
     return (
         <AppContext.Provider
             value={{
@@ -87,7 +96,8 @@ const AppProvider = ({children}) => {
                 getCategories,
                 addCategory,
                 login,
-                autoLogin
+                autoLogin,
+                showSnackBar
             }}
         >{children}</AppContext.Provider>
     )
