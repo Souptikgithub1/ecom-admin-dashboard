@@ -16,9 +16,10 @@ import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from "@material-ui/icons/Edit";
-import {Button} from "@material-ui/core";
+import {Button, withStyles} from "@material-ui/core";
 import AddCategory from "../../components/add-category/AddCategory";
 import Modal from "../modal/Modal";
+import UpdateCategory from "../../components/update-category/UpdateCategory";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -178,6 +179,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const StyledTableRow = withStyles((theme) => ({
+    root: {
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+    },
+}))(TableRow);
+
 const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
 
     const classes = useStyles();
@@ -188,7 +197,11 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
     const [dense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(8);
 
-    const [modalOpen, setModalOpen] = useState(false);
+    const [addCategoryModalOpen, setAddCategoryModalOpen] = useState(false);
+
+    const [updateCategoryModalOpen, setUpdateCategoryModalOpen] = useState(false);
+    const [categoryUpdateInitData, setCategoryUpdateInitData] = useState(null);
+
 
     const handleOnComplete = () => {
     }
@@ -217,6 +230,12 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
         setPage(0);
     };
 
+    const handleUpdateModalOpen = (e) => {
+        setUpdateCategoryModalOpen(true)
+        setCategoryUpdateInitData(e)
+        console.log(e);
+    }
+
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -226,7 +245,7 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
             <EnhancedTableToolbar
                 numSelected={selected.length}
                 headerName={selectedCategory.categoryName}
-                setModalOpen={setModalOpen} />
+                setModalOpen={setAddCategoryModalOpen} />
             <TableContainer>
                 <Table
                     className={classes.table}
@@ -252,7 +271,8 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
                                 const labelId = `enhanced-table-checkbox-${index}`;
 
                                 return (
-                                    <TableRow
+                                    <StyledTableRow
+                                        className='table-row'
                                         hover
                                         role="checkbox"
                                         aria-checked={isItemSelected}
@@ -263,14 +283,14 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
                                         {Object.keys(row).filter(x => !['children', 'parentCategoryId', 'categoryId'].includes(x))
                                             .map((key, cellIndex) => <TableCell id={key} key={labelId+cellIndex} align={cellIndex > 0 ? 'right' : 'left'}>{row[key].toString()}</TableCell>)}
                                         <TableCell key={labelId+'actionBtns'} align='right'>
-                                            <IconButton aria-label="edit" style={{color: 'green', marginRight: '.3rem'}} size="small">
+                                            <IconButton aria-label="edit" style={{color: 'green', marginRight: '.3rem'}} size="small" onClick={() => handleUpdateModalOpen(row)}>
                                                 <EditIcon fontSize="inherit" />
                                             </IconButton>
                                             <IconButton aria-label="delete" color='secondary' size="small">
                                                 <DeleteIcon fontSize="inherit" />
                                             </IconButton>
                                         </TableCell>
-                                    </TableRow>
+                                    </StyledTableRow>
                                 );
                             })}
                         {emptyRows > 0 && (
@@ -293,15 +313,26 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
         </Paper>
 
         <Modal
-            open={modalOpen}
-            setOpen={setModalOpen}
+            open={addCategoryModalOpen}
+            setOpen={setAddCategoryModalOpen}
             header={`add child for ${selectedCategory.categoryName}`}>
             <div className='add-category-form-container'>
                 <AddCategory
-                    setModalOpen={setModalOpen}
+                    setModalOpen={setAddCategoryModalOpen}
                     selectedCategory={selectedCategory}
                     onComplete={handleOnComplete}
                 />
+            </div>
+        </Modal>
+
+        <Modal
+            open={updateCategoryModalOpen}
+            setOpen={setUpdateCategoryModalOpen}
+            header={`Update ${categoryUpdateInitData?.categoryName}`}>
+            <div className='add-category-form-container'>
+                <UpdateCategory
+                    setModalOpen={setUpdateCategoryModalOpen}
+                    initData={categoryUpdateInitData} />
             </div>
         </Modal>
     </div>

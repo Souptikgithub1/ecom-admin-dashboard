@@ -144,7 +144,7 @@ export default function LoginPage(props) {
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
                     <Button type='submit' simple color="rose" size="lg" >
-                      Get started
+                      Let's Go
                     </Button>
                   </CardFooter>
                 </form>

@@ -17,7 +17,8 @@ const AddCategory = ({setModalOpen, onComplete, selectedCategory}) => {
     const [categoryDescription, setCategoryDescription] = useState('');
     const [activeIndicator, setActiveIndicator] = useState(true);
 
-    const handleAddCategory = () => {
+    const handleAddCategory = (e) => {
+        e.preventDefault()
         const category = {
             categoryName,
             categoryDescription,
@@ -50,20 +51,25 @@ const AddCategory = ({setModalOpen, onComplete, selectedCategory}) => {
     }
 
   return <React.Fragment>
-            <TextInput id="standard-basic" label="Enter Category Name" color='secondary' value={categoryName} onChange={(e) => setCategoryName(e)}/>
-            <TextInput id="standard-basic" label="Enter Category Description" color='secondary' value={categoryDescription} onChange={(e) =>setCategoryDescription(e)}/>
-      <div className='switch-container'>
-          <span>Active</span>
-          <Switch
-              checked={activeIndicator}
-              onChange={(e) => setActiveIndicator(!activeIndicator)}
-              name="activeIndicator"
-              inputProps={{ 'aria-label': 'secondary checkbox' }}
-          />
-      </div>
-      <Button disabled={disableButton()} variant="contained" color="secondary" fullWidth onClick={handleAddCategory}>
-          Submit
-      </Button>
+      <form onSubmit={handleAddCategory}>
+          <TextInput id="standard-basic" label="Enter Category Name" color='secondary' value={categoryName} onChange={(e) => setCategoryName(e)}/>
+          <TextInput id="standard-basic" label="Enter Category Description" color='secondary' value={categoryDescription} onChange={(e) =>setCategoryDescription(e)}/>
+          <div className='switch-container'>
+              <span>Active</span>
+              <Switch
+                  checked={activeIndicator}
+                  onChange={(e) => setActiveIndicator(!activeIndicator)}
+                  name="activeIndicator"
+                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+              />
+          </div>
+          <Button disabled={disableButton()}
+                  type='submit'
+                  variant="contained"
+                  color="secondary" fullWidth>
+              Submit
+          </Button>
+      </form>
   </React.Fragment>
 }
 
