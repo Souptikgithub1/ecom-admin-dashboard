@@ -105,7 +105,7 @@ export default function LoginPage(props) {
           <GridContainer justifyContent="center">
             <GridItem xs={12} sm={12} md={4}>
               <Card className={classes[cardAnimaton]}>
-                <form className={classes.form} >
+                <form className={classes.form} onSubmit={handleSubmitLogin}>
                   <CardHeader color="rose" className={classes.cardHeader}>
                     <h4>Login</h4>
                   </CardHeader>
@@ -143,7 +143,7 @@ export default function LoginPage(props) {
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button simple color="rose" size="lg" onClick={handleSubmitLogin}>
+                    <Button type='submit' simple color="rose" size="lg" >
                       Get started
                     </Button>
                   </CardFooter>

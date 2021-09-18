@@ -30,6 +30,7 @@ const RegularButton = React.forwardRef((props, ref) => {
     justIcon,
     className,
     onClick,
+    type,
     ...rest
   } = props;
 
@@ -49,7 +50,7 @@ const RegularButton = React.forwardRef((props, ref) => {
     [className]: className,
   });
   return (
-    <Button {...rest} ref={ref} className={btnClasses} onClick={onClick}>
+    <Button type={type} {...rest} ref={ref} className={btnClasses} onClick={onClick}>
       {children}
     </Button>
   );
