@@ -6,6 +6,7 @@ import {Icon} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import CardComponent from "../../util-components/card-component/CardComponent";
 import {useAppContext} from "../../context/AppContext";
+import ManageProducts from "../manage-products/ManageProducts";
 
 const navMenuItems = [
     {
@@ -25,6 +26,12 @@ const navMenuItems = [
         to: 'category-attributes',
         selected: '',
         icon: 'add_to_photos'
+    },
+    {
+        name: 'Manage Products',
+        to: 'products',
+        selected: '',
+        icon: 'build'
     }
 ]
 
@@ -60,6 +67,7 @@ const Admin = () => {
                     <Route path='/admin/category-attributes' component={() => <div>
                         <CardComponent headerText='Manage Category Attributes' iconName='add_to_photos' />
                     </div>} />
+                    <Route path='/admin/products' component={ManageProducts} />
                 </Switch>
             </div>
         </div>

@@ -1,0 +1,47 @@
+.form-container {
+    display: flex;
+    align-items: stretch;
+}
+
+.form-fields-section {
+    flex: 1;
+    padding-right: 3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.image-upload-section {
+    border-left: 1px solid #e1e1e1;
+    padding-left: 1.5rem;
+    flex: 3;
+}
+
+.upload-img-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.img-container {
+    width: 200px;
+    height: 200px;
+    margin-right: 1rem;
+    float: left;
+    transition: all 500ms ease-in-out;
+    position: relative;
+}
+
+.img-tag {
+    width: 100%;
+    height: auto;
+    transition: all 500ms ease-in-out;
+}
+
+.unselect-image-btn-container {
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}

@@ -26,7 +26,8 @@ export default function CustomInput(props) {
     inputRootCustomClasses,
     success,
     value,
-    onChange
+    onChange,
+      autoFocus=false
   } = props;
 
   const labelClasses = classNames({
@@ -67,6 +68,7 @@ export default function CustomInput(props) {
         </InputLabel>
       ) : null}
       <Input
+          autoFocus={autoFocus}
         classes={{
           input: inputClasses,
           root: marginTop,
