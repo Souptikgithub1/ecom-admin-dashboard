@@ -23,13 +23,13 @@ const App = () => {
         <Route path='/signup' component={() => <div>signup</div>}/>
         <Route path='/login'>{!!getUser() ? <Redirect to='/admin/categories' /> : <LoginPage />}</Route>
       </Switch>
-        {!!isLoading ? <Loader /> : ''}
+        <Loader open={isLoading} />
 
-            <Snackbar open={!!showSnack.show} autoHideDuration={3000} >
-                <Alert elevation={6} variant='filled' severity={showSnack.color} sx={{ width: '100%' }}>
-                    {showSnack.message}
-                </Alert>
-            </Snackbar>
+        <Snackbar open={!!showSnack.show} autoHideDuration={3000} >
+            <Alert elevation={6} variant='filled' severity={showSnack.color} sx={{ width: '100%' }}>
+                {showSnack.message}
+            </Alert>
+        </Snackbar>
     </div>
   );
 }

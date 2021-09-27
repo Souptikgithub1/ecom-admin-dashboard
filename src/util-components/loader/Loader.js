@@ -1,10 +1,13 @@
-import {CircularProgress} from "@material-ui/core";
+import {Backdrop, CircularProgress} from "@material-ui/core";
 import './Loader.css'
 
-const Loader = () => {
-    return <div className='loader-container'>
+const Loader = ({open}) => {
+    return <Backdrop
+        className='loader-container'
+        style={{zIndex: 999999}}
+        open={open}>
         <CircularProgress color="secondary" />
-    </div>
+    </Backdrop>
 }
 
 export default Loader

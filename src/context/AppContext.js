@@ -10,7 +10,7 @@ import {
     SUCCESS
 } from "../utils/StringConstants";
 import axios from 'axios';
-import {CATEGORIES_URL} from "../utils/ApiConstants";
+import {CATEGORIES_URL, PRODUCTS_URL} from "../utils/ApiConstants";
 
 const initState = {
     user: null,
@@ -56,6 +56,18 @@ const AppProvider = ({children}) => {
             })
     }
 
+    const addProduct = async (productPayload) => {
+        return await axios.post(PRODUCTS_URL, productPayload)
+            .then(res => {
+                setLoading(false)
+                return Promise.resolve(true)
+            })
+            .catch(err => {
+                setLoading(false)
+                return Promise.reject(false)
+            })
+    }
+
     const login = (loginPayload) => {
         setLoading(true)
         if (loginPayload.password === '1234') {
@@ -97,7 +109,8 @@ const AppProvider = ({children}) => {
                 addCategory,
                 login,
                 autoLogin,
-                showSnackBar
+                showSnackBar,
+                addProduct
             }}
         >{children}</AppContext.Provider>
     )

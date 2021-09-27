@@ -14,6 +14,7 @@ import DeleteIcon from '@material-ui/icons/Close';
 import {uploadImgPromise} from "../../utils/firebaseUtils";
 import axios from "axios";
 import {PRODUCTS_URL} from "../../utils/ApiConstants";
+import {useAppContext} from "../../context/AppContext";
 
 
 function TabPanel(props) {
@@ -50,6 +51,9 @@ function a11yProps(index) {
 }
 
 const ManageProducts = () => {
+
+    const {addProduct, setLoading} = useAppContext();
+
     const [selectedTab, setSelectedTab] = useState(0);
 
     const [productName, setProductName] = useState('');
@@ -83,7 +87,7 @@ const ManageProducts = () => {
 
     const handleSubmitForm = (e) => {
         e.preventDefault()
-
+        setLoading(true)
         const uploadPromises = [];
         selectedImages.forEach(img => uploadPromises.push(uploadImgPromise(img)))
 
@@ -96,7 +100,8 @@ const ManageProducts = () => {
                     rating: 4,
                     images: [...res]
             }
-            axios.post(PRODUCTS_URL, productPayload).then(res => handleChange('', 1))
+            addProduct(productPayload)
+                .then(res => handleChange('', 1))
         })
 
     }
