@@ -7,6 +7,7 @@ import React, {useState} from "react";
 import '../../util-components/text-input/TextInput.css'
 import './AddCategory.css'
 import {useAppContext} from "../../context/AppContext";
+import CustomInput from "../../creative-components/components/CustomInput/CustomInput";
 
 
 const AddCategory = ({setModalOpen, onComplete, selectedCategory}) => {
@@ -52,8 +53,21 @@ const AddCategory = ({setModalOpen, onComplete, selectedCategory}) => {
 
   return <React.Fragment>
       <form onSubmit={handleAddCategory}>
-          <TextInput id="standard-basic" label="Enter Category Name" color='secondary' value={categoryName} onChange={(e) => setCategoryName(e)}/>
-          <TextInput id="standard-basic" label="Enter Category Description" color='secondary' value={categoryDescription} onChange={(e) =>setCategoryDescription(e)}/>
+          <CustomInput
+              labelText="Enter Category Name"
+              id="category_name"
+              formControlProps={{fullWidth: true,}}
+              value={categoryName}
+              onChange={(e) => setCategoryName(e.target.value)}
+          />
+
+          <CustomInput
+              labelText="Enter Category Description"
+              id="category_description"
+              formControlProps={{fullWidth: true,}}
+              value={categoryDescription}
+              onChange={(e) =>setCategoryDescription(e.target.value)}
+          />
           <div className='switch-container'>
               <span>Active</span>
               <Switch
