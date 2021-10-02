@@ -187,11 +187,11 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
+const CategoryTableView = ({ rows, tableHeaders ,selectedCategory, colsNotToShow=[''], defaultSortCol='' }) => {
 
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
+    const [orderBy, setOrderBy] = React.useState(defaultSortCol);
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense] = React.useState(false);
@@ -280,7 +280,7 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory }) => {
                                         key={row.name}
                                         selected={isItemSelected}
                                     >
-                                        {Object.keys(row).filter(x => !['children', 'parentCategoryId', 'categoryId'].includes(x))
+                                        {Object.keys(row).filter(x => !colsNotToShow.includes(x))
                                             .map((key, cellIndex) => <TableCell id={key} key={labelId+cellIndex} align={cellIndex > 0 ? 'right' : 'left'}>{row[key].toString()}</TableCell>)}
                                         <TableCell key={labelId+'actionBtns'} align='right'>
                                             <IconButton aria-label="edit" style={{color: 'green', marginRight: '.3rem'}} size="small" onClick={() => handleUpdateModalOpen(row)}>

@@ -43,6 +43,8 @@ const ManageCategories = () => {
                             .filter(key => !['children', 'parentCategoryId', 'categoryId'].includes(key))
                             .map((key, index) => { return { id: key, numeric: !!index , disablePadding: false, label: camelToSpace(key) } })}
                         rows={[...selectedCategory['children']]}
+                        defaultSortCol={'categoryName'}
+                        colsNotToShow={['children', 'parentCategoryId', 'categoryId']}
                         selectedCategory={selectedCategory} />
                     : ''}
 
