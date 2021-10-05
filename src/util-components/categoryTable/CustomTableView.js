@@ -278,7 +278,7 @@ const CustomTableView = ({ rows,
                                     >
                                         {Object.keys(row).filter(x => !colsNotToShow.includes(x))
                                             .map((key, cellIndex) => <TableCell id={key} key={`${labelId}-${cellIndex}`} align={cellIndex > 0 ? 'right' : 'left'}>
-                                                { row[key] == '' || row[key].length === 0 ? '-' : row[key].toString()}
+                                                { row[key] === '' || row[key].length === 0 ? '-' : row[key].toString()}
                                             </TableCell>)
                                         }
 
