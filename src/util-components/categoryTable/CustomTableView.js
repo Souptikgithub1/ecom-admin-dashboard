@@ -134,7 +134,7 @@ const EnhancedTableToolbar = (props) => {
                 </Typography>
             ) : (
                 <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                    Child Categories of {headerName}
+                    {headerName}
                 </Typography>
             )}
 
@@ -184,9 +184,9 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-const CategoryTableView = ({ rows,
+const CustomTableView = ({ rows,
     tableHeaders,
-    selectedCategory,
+    headerName,
     colsNotToShow=[''],
     defaultSortCol='',
     handleClickEditBtn,
@@ -239,7 +239,7 @@ const CategoryTableView = ({ rows,
         <Paper className={classes.paper}>
             <EnhancedTableToolbar
                 numSelected={selected.length}
-                headerName={selectedCategory.categoryName}
+                headerName={headerName}
                 headerBtnName={headerBtnName}
                 handleClickHeaderBtn={handleClickHeaderBtn} />
             <TableContainer>
@@ -277,7 +277,11 @@ const CategoryTableView = ({ rows,
                                         selected={isItemSelected}
                                     >
                                         {Object.keys(row).filter(x => !colsNotToShow.includes(x))
-                                            .map((key, cellIndex) => <TableCell id={key} key={`${labelId}-${cellIndex}`} align={cellIndex > 0 ? 'right' : 'left'}>{row[key].toString()}</TableCell>)}
+                                            .map((key, cellIndex) => <TableCell id={key} key={`${labelId}-${cellIndex}`} align={cellIndex > 0 ? 'right' : 'left'}>
+                                                { row[key] == '' || row[key].length === 0 ? '-' : row[key].toString()}
+                                            </TableCell>)
+                                        }
+
                                         <TableCell key={labelId+'actionBtns'} align='right'>
                                             <IconButton aria-label="edit" style={{color: 'green', marginRight: '.3rem'}} size="small" onClick={() => handleClickEditBtn(row)}>
                                                 <EditIcon fontSize="inherit" />
@@ -312,4 +316,4 @@ const CategoryTableView = ({ rows,
     </div>
 }
 
-export default CategoryTableView
+export default CustomTableView

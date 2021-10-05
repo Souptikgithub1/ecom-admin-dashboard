@@ -2,7 +2,7 @@ import './ManageCategories.css'
 import React, {useEffect, useState} from "react";
 import CategoryTree from "../category-tree/CategoryTree";
 import {useAppContext} from "../../context/AppContext";
-import CategoryTableView from "../../util-components/categoryTable/CategoryTableView";
+import CustomTableView from "../../util-components/categoryTable/CustomTableView";
 import {camelToSpace, createCategoryTree} from "../../utils/CommonUtils";
 import CardComponent from "../../util-components/card-component/CardComponent";
 import Modal from "../../util-components/modal/Modal";
@@ -55,12 +55,12 @@ const ManageCategories = () => {
             </div>
             <div className="category-edit">
                 {!!selectedCategory
-                    ? <CategoryTableView
+                    ? <CustomTableView
                         tableHeaders={Object.keys(selectedCategory).filter(key => !['children', 'parentCategoryId', 'categoryId'].includes(key)).map((key, index) => { return { id: key, numeric: !!index , disablePadding: false, label: camelToSpace(key) } })}
                         rows={[...selectedCategory['children']]}
                         defaultSortCol={'categoryName'}
                         colsNotToShow={['children', 'parentCategoryId', 'categoryId']}
-                        selectedCategory={selectedCategory}
+                        headerName={`Child Categories of ${selectedCategory.categoryName}`}
                         handleClickEditBtn={handleUpdateModalOpen}
                         handleClickHeaderBtn={setAddCategoryModalOpen}
                         headerBtnName='Add Child'

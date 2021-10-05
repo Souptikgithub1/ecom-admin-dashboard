@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import CardComponent from "../../util-components/card-component/CardComponent";
 import {useAppContext} from "../../context/AppContext";
 import ManageProducts from "../manage-products/ManageProducts";
+import ManageAttributes from "../manage-attributes/ManageAttributes";
 
 const navMenuItems = [
     {
@@ -37,9 +38,10 @@ const navMenuItems = [
 
 const Admin = () => {
     const [appBarHeader, setAppBarHeader] = useState('')
-    const {getCategories} = useAppContext();
+    const {getCategories, getInitialAttributes} = useAppContext();
     useEffect(() => {
         getCategories().then(res => {})
+        getInitialAttributes().then(res => {})
     }, [])
 
     useEffect(() => {
@@ -61,9 +63,7 @@ const Admin = () => {
             <div className='manage-page-containers'>
                 <Switch>
                     <Route path='/admin/categories' component={ManageCategories} />
-                    <Route path='/admin/attributes' component={() => <div>
-                        <CardComponent headerText='Manage Attributes' iconName='ballot' />
-                    </div>} />
+                    <Route path='/admin/attributes' component={ManageAttributes} />
                     <Route path='/admin/category-attributes' component={() => <div>
                         <CardComponent headerText='Manage Category Attributes' iconName='add_to_photos' />
                     </div>} />

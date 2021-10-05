@@ -4,17 +4,18 @@ import {
     ADD_CATEGORY,
     FAILURE,
     LOCAL_STORAGE_USER,
-    LOGIN,
+    LOGIN, SET_ATTRIBUTES,
     SET_CATEGORIES,
     SET_LOADING, SHOW_SNACK,
     SUCCESS
 } from "../utils/StringConstants";
 import axios from 'axios';
-import {CATEGORIES_URL, PRODUCTS_URL} from "../utils/ApiConstants";
+import {CATEGORIES_URL, PRODUCTS_URL, SEARCH_ATTRIBUTES} from "../utils/ApiConstants";
 
 const initState = {
     user: null,
     categories: [],
+    attributes: [],
     isLoading: false,
     showSnack: {message: '', color: 'success', show: false}
 };
@@ -33,6 +34,20 @@ const AppProvider = ({children}) => {
         return await axios.get(CATEGORIES_URL)
             .then(res => {
                 dispatch({type: SET_CATEGORIES, payload: res.data})
+                setLoading(false)
+                return Promise.resolve(SUCCESS)
+            }).catch(err => {
+                console.log(err)
+                setLoading(false)
+                return Promise.resolve(FAILURE)
+            })
+    }
+
+    const getInitialAttributes = async () => {
+        setLoading(true)
+        return await axios.post(`${SEARCH_ATTRIBUTES}`)
+            .then(res => {
+                dispatch({type: SET_ATTRIBUTES, payload: res.data})
                 setLoading(false)
                 return Promise.resolve(SUCCESS)
             }).catch(err => {
@@ -107,6 +122,7 @@ const AppProvider = ({children}) => {
                 setLoading,
                 getCategories,
                 addCategory,
+                getInitialAttributes,
                 login,
                 autoLogin,
                 showSnackBar,
