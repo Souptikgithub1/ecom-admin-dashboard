@@ -21,7 +21,7 @@ const ManageAttributes = () => {
                         .filter(x => x!=='attributeId')
                         .map((key, index) => { return { id: key, numeric: !!index , disablePadding: false, label: camelToSpace(key) } })}
                     rows={[...attributes]}
-                    /*defaultSortCol={'categoryName'}*/
+                    defaultSortCol={'attributeName'}
                     colsNotToShow={['attributeId']}
                     headerName={`Attribute Table`}
                     handleClickEditBtn={(e) => console.log(e)}

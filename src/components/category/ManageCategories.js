@@ -74,13 +74,11 @@ const ManageCategories = () => {
             open={addCategoryModalOpen}
             setOpen={setAddCategoryModalOpen}
             header={`add child for ${selectedCategory?.categoryName}`}>
-            <div className='add-category-form-container'>
                 <AddCategory
                     setModalOpen={setAddCategoryModalOpen}
                     selectedCategory={selectedCategory}
                     onComplete={handleOnComplete}
                 />
-            </div>
         </Modal>
 
         <Modal

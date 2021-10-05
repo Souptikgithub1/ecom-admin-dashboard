@@ -52,36 +52,38 @@ const AddCategory = ({setModalOpen, onComplete, selectedCategory}) => {
 
   return <React.Fragment>
       <form onSubmit={handleAddCategory}>
-          <CustomInput
-              labelText="Enter Category Name"
-              id="category_name"
-              formControlProps={{fullWidth: true,}}
-              value={categoryName}
-              onChange={(e) => setCategoryName(e.target.value)}
-          />
-
-          <CustomInput
-              labelText="Enter Category Description"
-              id="category_description"
-              formControlProps={{fullWidth: true,}}
-              value={categoryDescription}
-              onChange={(e) =>setCategoryDescription(e.target.value)}
-          />
-          <div className='switch-container'>
-              <span>Active</span>
-              <Switch
-                  checked={activeIndicator}
-                  onChange={(e) => setActiveIndicator(!activeIndicator)}
-                  name="activeIndicator"
-                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+          <div className="add-category-form-container">
+              <CustomInput
+                  labelText="Enter Category Name"
+                  id="category_name"
+                  formControlProps={{fullWidth: true,}}
+                  value={categoryName}
+                  onChange={(e) => setCategoryName(e.target.value)}
               />
+
+              <CustomInput
+                  labelText="Enter Category Description"
+                  id="category_description"
+                  formControlProps={{fullWidth: true,}}
+                  value={categoryDescription}
+                  onChange={(e) =>setCategoryDescription(e.target.value)}
+              />
+              <div className='switch-container'>
+                  <span>Active</span>
+                  <Switch
+                      checked={activeIndicator}
+                      onChange={(e) => setActiveIndicator(!activeIndicator)}
+                      name="activeIndicator"
+                      inputProps={{ 'aria-label': 'secondary checkbox' }}
+                  />
+              </div>
+              <Button disabled={disableButton()}
+                      type='submit'
+                      variant="contained"
+                      color="secondary" fullWidth>
+                  Submit
+              </Button>
           </div>
-          <Button disabled={disableButton()}
-                  type='submit'
-                  variant="contained"
-                  color="secondary" fullWidth>
-              Submit
-          </Button>
       </form>
   </React.Fragment>
 }
