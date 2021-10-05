@@ -6,14 +6,12 @@ import Box from '@material-ui/core/Box';
 import CardComponent from "../../util-components/card-component/CardComponent";
 import CustomInput from "../../creative-components/components/CustomInput/CustomInput";
 import './ManageProducts.css'
-import {Button, Icon, IconButton} from "@material-ui/core";
+import {Button, IconButton} from "@material-ui/core";
 import $ from 'jquery';
 import {PhotoCamera} from "@material-ui/icons";
 import DeleteIcon from '@material-ui/icons/Close';
 
 import {uploadImgPromise} from "../../utils/firebaseUtils";
-import axios from "axios";
-import {PRODUCTS_URL} from "../../utils/ApiConstants";
 import {useAppContext} from "../../context/AppContext";
 
 
@@ -61,7 +59,6 @@ const ManageProducts = () => {
     const [price, setPrice] = useState(0);
     const [sellingPrice, setSellingPrice] = useState(0);
     const [selectedImages, setSelectedImages] = useState([]);
-    const [downloadUrlList, setDownloadUrlList] = useState([]);
 
     const handleChange = (event, newValue) => {
         setSelectedTab(newValue);

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -17,9 +17,6 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from "@material-ui/icons/Edit";
 import {Button, withStyles} from "@material-ui/core";
-import AddCategory from "../../components/add-category/AddCategory";
-import Modal from "../modal/Modal";
-import UpdateCategory from "../../components/update-category/UpdateCategory";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -60,9 +57,9 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                {tableHeaders.map((headCell) => (
+                {tableHeaders.map((headCell, cellIndex) => (
                     <TableCell
-                        key={headCell.id}
+                        key={`${headCell.id}-${cellIndex}`}
                         align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
@@ -123,7 +120,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
-    const { numSelected, headerName, setModalOpen } = props;
+    const { numSelected, headerName, handleClickHeaderBtn, headerBtnName } = props;
 
     return (
         <Toolbar
@@ -145,8 +142,8 @@ const EnhancedTableToolbar = (props) => {
                 variant="contained"
                 color="secondary"
 
-                onClick={() => setModalOpen(true)}
-            >Add Child</Button>
+                onClick={() => handleClickHeaderBtn(true)}
+            >{headerBtnName}</Button>
         </Toolbar>
     );
 };
@@ -187,7 +184,16 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-const CategoryTableView = ({ rows, tableHeaders ,selectedCategory, colsNotToShow=[''], defaultSortCol='' }) => {
+const CategoryTableView = ({ rows,
+    tableHeaders,
+    selectedCategory,
+    colsNotToShow=[''],
+    defaultSortCol='',
+    handleClickEditBtn,
+    handleClickHeaderBtn,
+   headerBtnName,
+   handleClickDeleteBtn
+}) => {
 
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -197,14 +203,7 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory, colsNotToShow
     const [dense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(8);
 
-    const [addCategoryModalOpen, setAddCategoryModalOpen] = useState(false);
 
-    const [updateCategoryModalOpen, setUpdateCategoryModalOpen] = useState(false);
-    const [categoryUpdateInitData, setCategoryUpdateInitData] = useState(null);
-
-
-    const handleOnComplete = () => {
-    }
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -230,11 +229,7 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory, colsNotToShow
         setPage(0);
     };
 
-    const handleUpdateModalOpen = (e) => {
-        setUpdateCategoryModalOpen(true)
-        setCategoryUpdateInitData(e)
-        console.log(e);
-    }
+
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -245,7 +240,8 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory, colsNotToShow
             <EnhancedTableToolbar
                 numSelected={selected.length}
                 headerName={selectedCategory.categoryName}
-                setModalOpen={setAddCategoryModalOpen} />
+                headerBtnName={headerBtnName}
+                handleClickHeaderBtn={handleClickHeaderBtn} />
             <TableContainer>
                 <Table
                     className={classes.table}
@@ -277,16 +273,16 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory, colsNotToShow
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={row.name}
+                                        key={`${row.name}-${index}`}
                                         selected={isItemSelected}
                                     >
                                         {Object.keys(row).filter(x => !colsNotToShow.includes(x))
-                                            .map((key, cellIndex) => <TableCell id={key} key={labelId+cellIndex} align={cellIndex > 0 ? 'right' : 'left'}>{row[key].toString()}</TableCell>)}
+                                            .map((key, cellIndex) => <TableCell id={key} key={`${labelId}-${cellIndex}`} align={cellIndex > 0 ? 'right' : 'left'}>{row[key].toString()}</TableCell>)}
                                         <TableCell key={labelId+'actionBtns'} align='right'>
-                                            <IconButton aria-label="edit" style={{color: 'green', marginRight: '.3rem'}} size="small" onClick={() => handleUpdateModalOpen(row)}>
+                                            <IconButton aria-label="edit" style={{color: 'green', marginRight: '.3rem'}} size="small" onClick={() => handleClickEditBtn(row)}>
                                                 <EditIcon fontSize="inherit" />
                                             </IconButton>
-                                            <IconButton aria-label="delete" color='secondary' size="small">
+                                            <IconButton aria-label="delete" color='secondary' size="small" onClick={() => handleClickDeleteBtn(row)}>
                                                 <DeleteIcon fontSize="inherit" />
                                             </IconButton>
                                         </TableCell>
@@ -312,29 +308,7 @@ const CategoryTableView = ({ rows, tableHeaders ,selectedCategory, colsNotToShow
             />
         </Paper>
 
-        <Modal
-            open={addCategoryModalOpen}
-            setOpen={setAddCategoryModalOpen}
-            header={`add child for ${selectedCategory.categoryName}`}>
-            <div className='add-category-form-container'>
-                <AddCategory
-                    setModalOpen={setAddCategoryModalOpen}
-                    selectedCategory={selectedCategory}
-                    onComplete={handleOnComplete}
-                />
-            </div>
-        </Modal>
 
-        <Modal
-            open={updateCategoryModalOpen}
-            setOpen={setUpdateCategoryModalOpen}
-            header={`Update ${categoryUpdateInitData?.categoryName}`}>
-            <div className='add-category-form-container'>
-                <UpdateCategory
-                    setModalOpen={setUpdateCategoryModalOpen}
-                    initData={categoryUpdateInitData} />
-            </div>
-        </Modal>
     </div>
 }
 
