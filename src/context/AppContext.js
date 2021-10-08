@@ -30,29 +30,29 @@ const AppProvider = ({children}) => {
     }
 
     const getCategories = async () => {
-        setLoading(true)
+        //setLoading(true)
         return await axios.get(CATEGORIES_URL)
             .then(res => {
                 dispatch({type: SET_CATEGORIES, payload: res.data})
-                setLoading(false)
+                //setLoading(false)
                 return Promise.resolve(SUCCESS)
             }).catch(err => {
                 console.log(err)
-                setLoading(false)
+                //setLoading(false)
                 return Promise.resolve(FAILURE)
             })
     }
 
     const getInitialAttributes = async () => {
-        setLoading(true)
+        //setLoading(true)
         return await axios.post(`${SEARCH_ATTRIBUTES}`)
             .then(res => {
                 dispatch({type: SET_ATTRIBUTES, payload: res.data})
-                setLoading(false)
+          //      setLoading(false)
                 return Promise.resolve(SUCCESS)
             }).catch(err => {
                 console.log(err)
-                setLoading(false)
+            //    setLoading(false)
                 return Promise.resolve(FAILURE)
             })
     }

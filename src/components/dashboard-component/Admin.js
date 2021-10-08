@@ -38,10 +38,11 @@ const navMenuItems = [
 
 const Admin = () => {
     const [appBarHeader, setAppBarHeader] = useState('')
-    const {getCategories, getInitialAttributes} = useAppContext();
+    const {getCategories, getInitialAttributes, setLoading} = useAppContext();
     useEffect(() => {
-        getCategories().then(res => {})
-        getInitialAttributes().then(res => {})
+        setLoading(true)
+        Promise.all([getCategories(),
+            getInitialAttributes()]).then(res => setLoading(false))
     }, [])
 
     useEffect(() => {
