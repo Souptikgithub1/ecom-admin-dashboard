@@ -52,7 +52,7 @@ const AddCategory = ({setModalOpen, onComplete, selectedCategory}) => {
 
   return <React.Fragment>
       <form onSubmit={handleAddCategory}>
-          <div className="add-category-form-container">
+          <div className="custom-form-container">
               <CustomInput
                   labelText="Enter Category Name"
                   id="category_name"

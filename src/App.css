@@ -4,3 +4,12 @@
     display: flex;
     flex-direction: column;
 }
+
+.custom-form-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30rem;
+    margin-bottom: 2rem;
+}

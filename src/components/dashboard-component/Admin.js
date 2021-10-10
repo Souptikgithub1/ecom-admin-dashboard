@@ -41,8 +41,8 @@ const Admin = () => {
     const {getCategories, getInitialAttributes, setLoading} = useAppContext();
     useEffect(() => {
         setLoading(true)
-        Promise.all([getCategories(),
-            getInitialAttributes()]).then(res => setLoading(false))
+        getCategories().then(res => {setLoading(false)})
+        getInitialAttributes().then(res => {})
     }, [])
 
     useEffect(() => {

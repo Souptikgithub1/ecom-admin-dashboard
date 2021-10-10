@@ -27,7 +27,8 @@ export default function CustomInput(props) {
     success,
     value,
     onChange,
-      autoFocus=false
+      autoFocus=false,
+      textArea=false
   } = props;
 
   const labelClasses = classNames({
@@ -69,6 +70,8 @@ export default function CustomInput(props) {
       ) : null}
       <Input
           autoFocus={autoFocus}
+          multiline={textArea}
+          minRows={textArea ? 5 : 1}
         classes={{
           input: inputClasses,
           root: marginTop,
