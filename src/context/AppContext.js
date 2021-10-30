@@ -1,6 +1,7 @@
 import React, {useContext, useReducer} from 'react';
 import appReducer from "./appReducer";
 import {
+    ADD_ATTRIBUTE,
     ADD_CATEGORY,
     FAILURE,
     LOCAL_STORAGE_USER,
@@ -10,7 +11,7 @@ import {
     SUCCESS
 } from "../utils/StringConstants";
 import axios from 'axios';
-import {CATEGORIES_URL, PRODUCTS_URL, SEARCH_ATTRIBUTES} from "../utils/ApiConstants";
+import {ATTRIBUTES_URL, CATEGORIES_URL, PRODUCTS_URL, SEARCH_ATTRIBUTES} from "../utils/ApiConstants";
 
 const initState = {
     user: null,
@@ -56,6 +57,21 @@ const AppProvider = ({children}) => {
                 return Promise.resolve(FAILURE)
             })
     }
+
+    const addAttribute = async (attributePayload) => {
+        setLoading(true)
+        return await axios.post(ATTRIBUTES_URL, attributePayload)
+            .then(res => {
+                dispatch({type: ADD_ATTRIBUTE, payload: res.data})
+                setLoading(false)
+                return Promise.resolve(SUCCESS)
+            }).catch(err => {
+                console.log(err)
+                setLoading(false)
+                return Promise.resolve(FAILURE)
+            })
+    }
+
 
     const addCategory = async (category) => {
         setLoading(true)
@@ -126,7 +142,8 @@ const AppProvider = ({children}) => {
                 login,
                 autoLogin,
                 showSnackBar,
-                addProduct
+                addProduct,
+                addAttribute
             }}
         >{children}</AppContext.Provider>
     )

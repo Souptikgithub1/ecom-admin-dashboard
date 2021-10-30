@@ -3,4 +3,5 @@ export const CATEGORIES_URL = `${BASE_URL}/categories`;
 export const GET_CATEGORIES_BY_DEPTH_URL = `${CATEGORIES_URL}/byDepth`;
 export const PRODUCTS_URL = `${BASE_URL}/products`;
 
-export const SEARCH_ATTRIBUTES = `${BASE_URL}/attributes/search`;
+export const ATTRIBUTES_URL =`${BASE_URL}/attributes`
+export const SEARCH_ATTRIBUTES = `${ATTRIBUTES_URL}/search`;

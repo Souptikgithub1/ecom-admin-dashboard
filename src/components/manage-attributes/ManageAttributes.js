@@ -9,14 +9,14 @@ import AddAttribute from "./add-attribute/AddAttribute";
 const ManageAttributes = () => {
 
     const {attributes} = useAppContext();
-    const [openAddAttrModal, setOpenAddAttrModal] = useState(false);
+    const [openAttrModal, setOpenAttrModal] = useState(false);
 
     useEffect(() => {
         console.log(attributes)
     }, [attributes])
 
     const handleAddAttrModalOpen = (e) => {
-        setOpenAddAttrModal(true)
+        setOpenAttrModal(true)
     }
 
     return <div>
@@ -41,8 +41,8 @@ const ManageAttributes = () => {
 
     <AddAttribute
         header='Add Attribute'
-        setOpenAddAttrModal={setOpenAddAttrModal}
-        openAddAttrModal={openAddAttrModal}
+        setOpen={setOpenAttrModal}
+        open={openAttrModal}
     />
     </div>
 }

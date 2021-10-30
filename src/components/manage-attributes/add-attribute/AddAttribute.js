@@ -2,32 +2,49 @@ import Modal from "../../../util-components/modal/Modal";
 import React, {useState} from "react";
 import CustomInput from "../../../creative-components/components/CustomInput/CustomInput";
 import {Button} from "@material-ui/core";
+import {useAppContext} from "../../../context/AppContext";
+import {SUCCESS} from "../../../utils/StringConstants";
 
-const AddAttribute = ({openAddAttrModal, setOpenAddAttrModal, header}) => {
+const AddAttribute = ({open, setOpen, header}) => {
 
     const [attributeName, setAttributeName] = useState('')
     const [uomField, setUomField] = useState('')
-    const [uoms, setUoms] = useState([])
     const [validValueField, setvalidValueField] = useState('')
-    const [validValues, setvalidValues] = useState([])
     const [dataType, setDataType] = useState('')
     const [attributeGroup, setAttributeGroup] = useState('')
 
+    const {addAttribute} = useAppContext();
+
     const handleSubmitAddAttributeForm = (e) => {
         e.preventDefault()
-        console.log(uomField.split('\n'));
-        console.log({
+        const attrPayload = {
             attributeName,
             dataType,
             uoms: [...uomField.split('\n')],
-            validValues: [...validValueField.split('\n')]
-        })
+            validValues: [...validValueField.split('\n')],
+            attributeGroup
+        }
+
+       addAttribute(attrPayload).then(res => {
+            clearFormData()
+            if (res === SUCCESS) {
+                setOpen(false)
+            }
+       })
+    }
+
+    const clearFormData = () => {
+        setAttributeName('')
+        setUomField('')
+        setvalidValueField('')
+        setDataType('')
+        setAttributeGroup('')
     }
 
 
     return <Modal
-        open={openAddAttrModal}
-        setOpen={setOpenAddAttrModal}
+        open={open}
+        setOpen={setOpen}
         header={header}>
         <form className='custom-form-container' onSubmit={handleSubmitAddAttributeForm}>
             <CustomInput
