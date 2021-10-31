@@ -1,6 +1,6 @@
 import './Admin.css';
 import RightNav from "./dashboard-child-components/righ-nav-component/RightNav";
-import { Route, Switch} from "react-router-dom";
+import {Route, Switch, useLocation} from "react-router-dom";
 import ManageCategories from "../category/ManageCategories";
 import {Icon} from "@material-ui/core";
 import {useEffect, useState} from "react";
@@ -39,6 +39,7 @@ const navMenuItems = [
 const Admin = () => {
     const [appBarHeader, setAppBarHeader] = useState('')
     const {getCategories, getInitialAttributes, setLoading} = useAppContext();
+    const location = useLocation();
     useEffect(() => {
         setLoading(true)
         getCategories().then(res => {setLoading(false)})
@@ -46,9 +47,8 @@ const Admin = () => {
     }, [])
 
     useEffect(() => {
-        const arr = window.location.href.split('/');
-        setAppBarHeader(navMenuItems.filter(item => item.to === arr[arr.length - 1])[0].name)
-    }, [window.location.href])
+        setAppBarHeader(navMenuItems.filter(item => item.to === location.pathname.split('/')[2])[0].name)
+    }, [location])
 
 
     return <div className='dashboard-container'>
