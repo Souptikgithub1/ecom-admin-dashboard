@@ -1,0 +1,18 @@
+.table-search-section {
+    margin-left: 1rem;
+    width: 15rem;
+    display: flex;
+    position: relative;
+}
+
+.search-icon-wrapper {
+    position: absolute;
+    top: 1.8rem;
+    right: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.search-icon {
+    color: #919191;
+}

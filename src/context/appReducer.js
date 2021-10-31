@@ -29,6 +29,8 @@ const appReducer = (state, action) => {
         case LOGIN: return {...state, user: action.payload}
 
         case SHOW_SNACK: return {...state, showSnack: action.payload}
+
+        default: return {...state}
     }
 }
 

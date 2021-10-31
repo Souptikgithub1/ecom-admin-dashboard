@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -17,6 +17,9 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from "@material-ui/icons/Edit";
 import {Button, withStyles} from "@material-ui/core";
+import CustomInput from "../../creative-components/components/CustomInput/CustomInput";
+import './CategoryTableView.css'
+import Search from "@material-ui/icons/Search";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -191,8 +194,8 @@ const CustomTableView = ({ rows,
     defaultSortCol='',
     handleClickEditBtn,
     handleClickHeaderBtn,
-   headerBtnName,
-   handleClickDeleteBtn
+    headerBtnName,
+    handleClickDeleteBtn,
 }) => {
 
     const classes = useStyles();
@@ -203,6 +206,13 @@ const CustomTableView = ({ rows,
     const [dense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(8);
 
+    const [searchField, setSearchField] = useState('')
+    const [searchedRows, setSearchedRows] = useState([])
+
+
+    useEffect(() => {
+        setSearchedRows(rows)
+    }, [rows])
 
 
     const handleRequestSort = (event, property) => {
@@ -213,7 +223,7 @@ const CustomTableView = ({ rows,
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.name);
+            const newSelecteds = searchedRows.map((n) => n.name);
             setSelected(newSelecteds);
             return;
         }
@@ -227,13 +237,24 @@ const CustomTableView = ({ rows,
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
-    };
+    }
 
+    const handleSearch = (e) => {
+        setSearchField(prevState => {
+            setSearchedRows([...rows.filter(row =>
+                row['attributeName']?.toLowerCase()?.includes(e.toLowerCase()) ||
+                row['attributeGroup']?.toLowerCase()?.includes(e.toLowerCase()) ||
 
+                row['categoryName']?.toLowerCase()?.includes(e.toLowerCase()) ||
+                row['categoryDescription']?.toLowerCase()?.includes(e.toLowerCase())
+            )])
+            return e
+        })
+    }
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, searchedRows.length - page * rowsPerPage);
 
     return <div className={classes.root}>
         <Paper className={classes.paper}>
@@ -243,6 +264,20 @@ const CustomTableView = ({ rows,
                 headerBtnName={headerBtnName}
                 handleClickHeaderBtn={handleClickHeaderBtn} />
             <TableContainer>
+                <div className='table-search-section'>
+                    <CustomInput
+                        labelText="Search..."
+                        id="search_field"
+                        formControlProps={{fullWidth: true,}}
+                        value={searchField}
+                        onChange={(e) => handleSearch(e.target.value)}
+                    />
+                    <div
+                        className='search-icon-wrapper'
+                        aria-label="search-icon">
+                        <Search className='search-icon' />
+                    </div>
+                </div>
                 <Table
                     className={classes.table}
                     aria-labelledby="tableTitle"
@@ -257,10 +292,10 @@ const CustomTableView = ({ rows,
                         tableHeaders={tableHeaders}
                         onSelectAllClick={handleSelectAllClick}
                         onRequestSort={handleRequestSort}
-                        rowCount={rows.length}
+                        rowCount={searchedRows.length}
                     />
                     <TableBody>
-                        {stableSort(rows, getComparator(order, orderBy))
+                        {stableSort(searchedRows, getComparator(order, orderBy))
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
                                 const isItemSelected = isSelected(row.name);
@@ -278,7 +313,7 @@ const CustomTableView = ({ rows,
                                     >
                                         {Object.keys(row).filter(x => !colsNotToShow.includes(x))
                                             .map((key, cellIndex) => <TableCell id={key} key={`${labelId}-${cellIndex}`} align={cellIndex > 0 ? 'right' : 'left'}>
-                                                { row[key] === '' || row[key].length === 0 ? '-' : row[key].toString()}
+                                                { ( !row[key] || row[key] === '' || row[key].length === 0) ? '-' : row[key].toString()}
                                             </TableCell>)
                                         }
 
@@ -304,7 +339,7 @@ const CustomTableView = ({ rows,
             <TablePagination
                 rowsPerPageOptions={[8, 10]}
                 component="div"
-                count={rows.length}
+                count={searchedRows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

@@ -5,6 +5,7 @@
     flex-direction: column;
     padding: 0.5rem;
     min-height: 49rem;
+    margin-bottom: 3rem;
 }
 
 .card-content {

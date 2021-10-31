@@ -9,7 +9,7 @@ const AddAttribute = ({open, setOpen, header}) => {
 
     const [attributeName, setAttributeName] = useState('')
     const [uomField, setUomField] = useState('')
-    const [validValueField, setvalidValueField] = useState('')
+    const [validValueField, setValidValueField] = useState('')
     const [dataType, setDataType] = useState('')
     const [attributeGroup, setAttributeGroup] = useState('')
 
@@ -20,8 +20,8 @@ const AddAttribute = ({open, setOpen, header}) => {
         const attrPayload = {
             attributeName,
             dataType,
-            uoms: [...uomField.split('\n')],
-            validValues: [...validValueField.split('\n')],
+            uoms: !!uomField ? [...uomField.split('\n')] : null,
+            validValues: !!validValueField ? [...validValueField.split('\n')] : null,
             attributeGroup
         }
 
@@ -36,7 +36,7 @@ const AddAttribute = ({open, setOpen, header}) => {
     const clearFormData = () => {
         setAttributeName('')
         setUomField('')
-        setvalidValueField('')
+        setValidValueField('')
         setDataType('')
         setAttributeGroup('')
     }
@@ -69,7 +69,7 @@ const AddAttribute = ({open, setOpen, header}) => {
                 id="valid_values"
                 formControlProps={{fullWidth: true,}}
                 value={validValueField}
-                onChange={(e) => setvalidValueField(e.target.value)}
+                onChange={(e) => setValidValueField(e.target.value)}
             />
 
             <CustomInput

@@ -18,10 +18,10 @@ import CustomInput from "../../components/CustomInput/CustomInput.js";
 
 import styles from "../../assets/jss/material-kit-react/views/loginPage.js";
 
-import image1 from "../../assets/img/big1.jpeg";
+/*import image1 from "../../assets/img/big1.jpeg";
 import image2 from "../../assets/img/bg.jpg";
 import image3 from "../../assets/img/bg2.jpg";
-import image4 from "../../assets/img/bg3.jpg";
+import image4 from "../../assets/img/bg3.jpg";*/
 import image5 from "../../assets/img/bg7.jpg";
 import {useAppContext} from "../../../context/AppContext";
 import {useHistory} from "react-router-dom";
@@ -36,7 +36,6 @@ export default function LoginPage(props) {
 
     const history = useHistory();
 
-    const [images, setImages] = useState([])
   const [cardAnimaton, setCardAnimation] = useState("cardHidden");
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -47,10 +46,6 @@ export default function LoginPage(props) {
       }, 700);
   }, [])
 
-    useEffect(() => {
-        setImages([image1, image2, image3, image4, image5, image1, image2, image3, image4, image5 ])
-        setImages([...images])
-    }, [])
 
 
   const classes = useStyles();

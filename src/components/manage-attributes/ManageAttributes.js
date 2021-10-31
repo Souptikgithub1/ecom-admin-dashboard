@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import {useAppContext} from "../../context/AppContext";
 import CustomTableView from "../../util-components/categoryTable/CustomTableView";
 import {camelToSpace} from "../../utils/CommonUtils";
-import Modal from "../../util-components/modal/Modal";
 import AddAttribute from "./add-attribute/AddAttribute";
 
 const ManageAttributes = () => {
@@ -12,7 +11,6 @@ const ManageAttributes = () => {
     const [openAttrModal, setOpenAttrModal] = useState(false);
 
     useEffect(() => {
-        console.log(attributes)
     }, [attributes])
 
     const handleAddAttrModalOpen = (e) => {
