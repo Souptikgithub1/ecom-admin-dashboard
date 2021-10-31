@@ -1,7 +1,10 @@
-export const BASE_URL = `https://ecom-api-reactive.herokuapp.com/ats`;
-export const CATEGORIES_URL = `${BASE_URL}/categories`;
-export const GET_CATEGORIES_BY_DEPTH_URL = `${CATEGORIES_URL}/byDepth`;
-export const PRODUCTS_URL = `${BASE_URL}/products`;
+export const BASE_URL = `https://ecom-api-reactive.herokuapp.com/ats`
+export const CATEGORIES_URL = `${BASE_URL}/categories`
+export const GET_CATEGORIES_BY_DEPTH_URL = `${CATEGORIES_URL}/byDepth`
+export const PRODUCTS_URL = `${BASE_URL}/products`
 
 export const ATTRIBUTES_URL =`${BASE_URL}/attributes`
-export const SEARCH_ATTRIBUTES = `${ATTRIBUTES_URL}/search`;
+export const SEARCH_ATTRIBUTES = `${ATTRIBUTES_URL}/search`
+
+export const CATEGORY_ATTRIBUTES_URL = `${BASE_URL}/categoryattributes`
+export const CATEGORY_ATTRIBUTES_SEARCH_URL = `${CATEGORY_ATTRIBUTES_URL}/search`

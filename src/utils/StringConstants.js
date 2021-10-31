@@ -12,3 +12,8 @@ export const FAILURE = 'FAILURE';
 
 
 export const LOCAL_STORAGE_USER = 'user';
+
+export const OBJECT_ARRAY = '[object Array]'
+export const OBJECT_OBJECT = '[object Object]'
+export const OBJECT_String = '[object String]'
+export const OBJECT_Number = '[object Number]'

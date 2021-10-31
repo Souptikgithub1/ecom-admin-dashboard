@@ -20,6 +20,7 @@ import {Button, withStyles} from "@material-ui/core";
 import CustomInput from "../../creative-components/components/CustomInput/CustomInput";
 import './CategoryTableView.css'
 import Search from "@material-ui/icons/Search";
+import {OBJECT_ARRAY} from "../../utils/StringConstants";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -60,27 +61,29 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                {tableHeaders.map((headCell, cellIndex) => (
-                    <TableCell
-                        key={`${headCell.id}-${cellIndex}`}
-                        align={headCell.numeric ? 'right' : 'left'}
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={createSortHandler(headCell.id)}
-                        >
-                            {headCell.label}
-                            {orderBy === headCell.id ? (
-                                <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-                            ) : null}
-                        </TableSortLabel>
-                    </TableCell>
-                ))}
+                {!!tableHeaders && tableHeaders.length > 0
+                    ? tableHeaders?.map((headCell, cellIndex) => (
+                            <TableCell
+                                key={`${headCell.id}-${cellIndex}`}
+                                align={headCell.numeric ? 'right' : 'left'}
+                                padding={headCell.disablePadding ? 'none' : 'normal'}
+                                sortDirection={orderBy === headCell.id ? order : false}
+                            >
+                                <TableSortLabel
+                                    active={orderBy === headCell.id}
+                                    direction={orderBy === headCell.id ? order : 'asc'}
+                                    onClick={createSortHandler(headCell.id)}
+                                >
+                                    {headCell.label}
+                                    {orderBy === headCell.id ? (
+                                        <span className={classes.visuallyHidden}>
+                      {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                    </span>
+                                    ) : null}
+                                </TableSortLabel>
+                            </TableCell>
+                        ))
+                    : ''}
             </TableRow>
         </TableHead>
     );
@@ -223,7 +226,7 @@ const CustomTableView = ({ rows,
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = searchedRows.map((n) => n.name);
+            const newSelecteds = searchedRows?.map((n) => n.name);
             setSelected(newSelecteds);
             return;
         }
@@ -292,42 +295,48 @@ const CustomTableView = ({ rows,
                         tableHeaders={tableHeaders}
                         onSelectAllClick={handleSelectAllClick}
                         onRequestSort={handleRequestSort}
-                        rowCount={searchedRows.length}
+                        rowCount={searchedRows?.length}
                     />
                     <TableBody>
-                        {stableSort(searchedRows, getComparator(order, orderBy))
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row, index) => {
-                                const isItemSelected = isSelected(row.name);
-                                const labelId = `enhanced-table-checkbox-${index}`;
+                        {!!searchedRows && searchedRows.length > 0
+                            ? stableSort(searchedRows, getComparator(order, orderBy))
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((row, index) => {
+                                    const isItemSelected = isSelected(row.name);
+                                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                                return (
-                                    <StyledTableRow
-                                        className='table-row'
-                                        hover
-                                        role="checkbox"
-                                        aria-checked={isItemSelected}
-                                        tabIndex={-1}
-                                        key={`${row.name}-${index}`}
-                                        selected={isItemSelected}
-                                    >
-                                        {Object.keys(row).filter(x => !colsNotToShow.includes(x))
-                                            .map((key, cellIndex) => <TableCell id={key} key={`${labelId}-${cellIndex}`} align={cellIndex > 0 ? 'right' : 'left'}>
-                                                { ( !row[key] || row[key] === '' || row[key].length === 0) ? '-' : row[key].toString()}
-                                            </TableCell>)
-                                        }
+                                    return (
+                                        <StyledTableRow
+                                            className='table-row'
+                                            hover
+                                            role="checkbox"
+                                            aria-checked={isItemSelected}
+                                            tabIndex={-1}
+                                            key={`${row.name}-${index}`}
+                                            selected={isItemSelected}
+                                        >
+                                            {Object.keys(row).filter(x => !colsNotToShow.includes(x))
+                                                .map((key, cellIndex) => <TableCell id={key} key={`${labelId}-${cellIndex}`} align={cellIndex > 0 ? 'right' : 'left'}>
+                                                    { ( !row[key] || row[key] === '' || row[key].length === 0)
+                                                        ? '-'
+                                                        : Object.prototype.toString.call(row[key]) === OBJECT_ARRAY
+                                                            ? row[key].map((v, i) => <div key={i} style={{width: '100%'}}>{v}</div>)
+                                                            : row[key].toString()}
+                                                </TableCell>)
+                                            }
 
-                                        <TableCell key={labelId+'actionBtns'} align='right'>
-                                            <IconButton aria-label="edit" style={{color: 'green', marginRight: '.3rem'}} size="small" onClick={() => handleClickEditBtn(row)}>
-                                                <EditIcon fontSize="inherit" />
-                                            </IconButton>
-                                            <IconButton aria-label="delete" color='secondary' size="small" onClick={() => handleClickDeleteBtn(row)}>
-                                                <DeleteIcon fontSize="inherit" />
-                                            </IconButton>
-                                        </TableCell>
-                                    </StyledTableRow>
-                                );
-                            })}
+                                            <TableCell key={labelId+'actionBtns'} align='right'>
+                                                <IconButton aria-label="edit" style={{color: 'green', marginRight: '.3rem'}} size="small" onClick={() => handleClickEditBtn(row)}>
+                                                    <EditIcon fontSize="inherit" />
+                                                </IconButton>
+                                                <IconButton aria-label="delete" color='secondary' size="small" onClick={() => handleClickDeleteBtn(row)}>
+                                                    <DeleteIcon fontSize="inherit" />
+                                                </IconButton>
+                                            </TableCell>
+                                        </StyledTableRow>
+                                    );
+                                })
+                            : ''}
                         {emptyRows > 0 && (
                             <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                                 <TableCell colSpan={6} />
@@ -339,7 +348,7 @@ const CustomTableView = ({ rows,
             <TablePagination
                 rowsPerPageOptions={[8, 10]}
                 component="div"
-                count={searchedRows.length}
+                count={searchedRows?.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

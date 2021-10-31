@@ -8,6 +8,7 @@ import CardComponent from "../../util-components/card-component/CardComponent";
 import {useAppContext} from "../../context/AppContext";
 import ManageProducts from "../manage-products/ManageProducts";
 import ManageAttributes from "../manage-attributes/ManageAttributes";
+import ManageCategoryAttributes from "../manage-category-attributes/ManageCategoryAttributes";
 
 const navMenuItems = [
     {
@@ -65,9 +66,7 @@ const Admin = () => {
                 <Switch>
                     <Route path='/admin/categories' component={ManageCategories} />
                     <Route path='/admin/attributes' component={ManageAttributes} />
-                    <Route path='/admin/category-attributes' component={() => <div>
-                        <CardComponent headerText='Manage Category Attributes' iconName='add_to_photos' />
-                    </div>} />
+                    <Route path='/admin/category-attributes' component={ManageCategoryAttributes} />
                     <Route path='/admin/products' component={ManageProducts} />
                 </Switch>
             </div>

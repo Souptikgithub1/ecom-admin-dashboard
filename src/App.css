@@ -13,3 +13,16 @@
     width: 30rem;
     margin-bottom: 2rem;
 }
+
+
+.tree-view-category {
+    flex: 3;
+    align-items: stretch;
+    border-right: 1px solid #e1e1e1;
+}
+
+.category-edit,
+.add-category-attribute {
+    flex: 9;
+    padding-left: 1rem;
+}
