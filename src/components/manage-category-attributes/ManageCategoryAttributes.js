@@ -6,6 +6,7 @@ import {camelToSpace, createCategoryTree} from "../../utils/CommonUtils";
 import CustomTableView from "../../util-components/categoryTable/CustomTableView";
 import axios from "axios";
 import {CATEGORY_ATTRIBUTES_SEARCH_URL} from "../../utils/ApiConstants";
+import AddCategoryAttribute from "./add-category-attribute/AddCategoryAttribute";
 
 const colsNotToShow = [
     'children',
@@ -87,6 +88,11 @@ const ManageCategoryAttributes = () => {
                   />
                   }
           </div>
+
+          <AddCategoryAttribute
+              header='Add Attribute'
+              setOpen={setCategoryAttributeFormModalOpen}
+              open={categoryAttributeFormModalOpen} />
       </CardComponent>
   </React.Fragment>
 }
